@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 800' width='600' height='800'>
+  <defs>
+    <pattern id='grid' x='0' y='0' width='40' height='40' patternUnits='userSpaceOnUse'>
+      <path d='M 40 0 L 0 0 0 40' fill='none' stroke='#e5d7c0' stroke-width='1'/>
+    </pattern>
+  </defs>
+  <rect width='600' height='800' fill='#fdf6e7'/>
+  <rect width='600' height='800' fill='url(#grid)'/>
+  <rect x='30' y='30' width='540' height='740' fill='#ffffff' fill-opacity='0.85' stroke='#c9b896' stroke-width='2' rx='6'/>
+  <text x='50' y='90' font-family='serif' font-size='28' font-weight='bold' fill='#2a2a2a'>अध्याय 2 — एक चर वाले रैखिक समीकरण</text>
+  <text x='50' y='130' font-family='serif' font-size='18' fill='#444'>NCERT Class 8 · Mathematics · Page 26</text>
+  <line x1='50' y1='150' x2='550' y2='150' stroke='#c9b896' stroke-width='1'/>
+  <text x='50' y='200' font-family='serif' font-size='22' font-weight='bold' fill='#2a2a2a'>प्रश्न 3.</text>
+  <text x='110' y='200' font-family='serif' font-size='22' fill='#2a2a2a'>निम्न समीकरण को हल कीजिए:</text>
+  <text x='250' y='270' font-family='monospace' font-size='42' font-weight='bold' fill='#1a1a1a'>2x + 3 = 11</text>
+  <text x='50' y='350' font-family='serif' font-size='20' fill='#555'>इसके बाद अपने उत्तर की जाँच कीजिए।</text>
+  <line x1='50' y1='400' x2='550' y2='400' stroke='#c9b896' stroke-width='0.8' stroke-dasharray='4,4'/>
+  <text x='50' y='440' font-family='serif' font-size='18' fill='#777'>प्रश्न 4. यदि 5y - 7 = 18, तो y का मान ज्ञात कीजिए।</text>
+  <text x='50' y='490' font-family='serif' font-size='18' fill='#777'>प्रश्न 5. एक संख्या का तीन गुना उसमें से 4 घटाने पर 11 के बराबर है। संख्या ज्ञात कीजिए।</text>
+  <circle cx='100' cy='265' r='80' fill='none' stroke='#d44' stroke-width='3' stroke-dasharray='8,4' opacity='0.5'/>
+  <text x='40' y='730' font-family='serif' font-size='14' fill='#999' font-style='italic'>26</text>
+</svg>

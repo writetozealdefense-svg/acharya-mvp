@@ -1,0 +1,32 @@
+[
+  {
+    "id": "kn-class7-chemistry",
+    "label": "Class 7 · Kannada · Oxygen vs CO₂",
+    "language": "kn",
+    "question": "ಆಮ್ಲಜನಕ ಮತ್ತು ಇಂಗಾಲದ ಡೈಆಕ್ಸೈಡ್ ನಡುವಿನ ವ್ಯತ್ಯಾಸವೇನು?",
+    "english_gloss": "What is the difference between oxygen and carbon dioxide?",
+    "imageUrl": null,
+    "forceHallucinationDemo": false,
+    "blurb": "A girl in Hubballi asks a basic Kannada chemistry question. All three models should agree — clean Verified ✓ verdict."
+  },
+  {
+    "id": "hi-class8-algebra-image",
+    "label": "Class 8 · Hindi · Algebra image upload",
+    "language": "hi",
+    "question": "",
+    "english_gloss": "Solve 2x + 3 = 11 (extracted from the uploaded algebra image)",
+    "imageUrl": "/demo-images/algebra-problem.png",
+    "forceHallucinationDemo": false,
+    "blurb": "A parent uploads a photo of an algebra problem in Hindi. Claude vision extracts the question; the consensus engine solves it step-by-step."
+  },
+  {
+    "id": "hallucination-zero",
+    "label": "The hallucination catch — who invented zero?",
+    "language": "en",
+    "question": "Who invented the number zero — Aryabhata or Brahmagupta?",
+    "english_gloss": "Demo override: GPT-4o-mini's vote is replaced with a confidently-wrong 'Aryabhata' answer to stage a model disagreement scenario.",
+    "imageUrl": null,
+    "forceHallucinationDemo": true,
+    "blurb": "Stages a model disagreement: one model is hard-coded to confidently claim Aryabhata invented zero. Watch the Brooks–Iyengar engine catch the outlier and downgrade the verdict."
+  }
+]

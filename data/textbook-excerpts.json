@@ -1,0 +1,162 @@
+[
+  {
+    "id": "kn-sci-7-photosynthesis",
+    "subject": "biology",
+    "class": 7,
+    "board": "Karnataka State Board",
+    "language": "kn",
+    "topic": "Photosynthesis",
+    "excerpt": "ಸಸ್ಯಗಳು ಸೂರ್ಯನ ಬೆಳಕಿನ ಸಹಾಯದಿಂದ ನೀರು ಮತ್ತು ಇಂಗಾಲದ ಡೈಆಕ್ಸೈಡ್‌ನಿಂದ ತಮ್ಮ ಆಹಾರವನ್ನು ತಯಾರಿಸುತ್ತವೆ. ಈ ಪ್ರಕ್ರಿಯೆಯನ್ನು ದ್ಯುತಿಸಂಶ್ಲೇಷಣೆ ಎನ್ನುತ್ತಾರೆ. ಎಲೆಗಳಲ್ಲಿರುವ ಹಸಿರು ವರ್ಣದ್ರವ್ಯ ಕ್ಲೋರೊಫಿಲ್ ಸೂರ್ಯನ ಬೆಳಕನ್ನು ಹೀರಿಕೊಳ್ಳುತ್ತದೆ.",
+    "english_translation": "Plants make their food from water and carbon dioxide using sunlight. This process is called photosynthesis. The green pigment chlorophyll in leaves absorbs sunlight."
+  },
+  {
+    "id": "hi-sci-8-force",
+    "subject": "physics",
+    "class": 8,
+    "board": "CBSE",
+    "language": "hi",
+    "topic": "Force and pressure",
+    "excerpt": "किसी वस्तु पर लगाया गया धक्का या खिंचाव बल कहलाता है। बल वस्तु की गति को बदल सकता है, उसे रोक सकता है, या उसकी आकृति बदल सकता है। बल का SI मात्रक न्यूटन (N) है।",
+    "english_translation": "A push or pull on an object is called force. Force can change the motion of an object, stop it, or change its shape. The SI unit of force is Newton (N)."
+  },
+  {
+    "id": "en-math-7-integers",
+    "subject": "math",
+    "class": 7,
+    "board": "NCERT",
+    "language": "en",
+    "topic": "Integers — addition rules",
+    "excerpt": "When adding two integers with the same sign, add their absolute values and keep the common sign. When adding two integers with different signs, subtract the smaller absolute value from the larger and keep the sign of the integer with the larger absolute value. Example: (-7) + (+3) = -4.",
+    "english_translation": null
+  },
+  {
+    "id": "kn-sci-7-respiration",
+    "subject": "biology",
+    "class": 7,
+    "board": "Karnataka State Board",
+    "language": "kn",
+    "topic": "Respiration in plants and animals",
+    "excerpt": "ಜೀವಿಗಳು ಆಹಾರದಿಂದ ಶಕ್ತಿಯನ್ನು ಪಡೆಯಲು ಆಮ್ಲಜನಕವನ್ನು ಬಳಸುತ್ತವೆ ಮತ್ತು ಇಂಗಾಲದ ಡೈಆಕ್ಸೈಡ್ ಅನ್ನು ಬಿಡುಗಡೆ ಮಾಡುತ್ತವೆ. ಇದನ್ನು ಶ್ವಸನ ಎನ್ನುತ್ತಾರೆ. ಸಸ್ಯಗಳು ರಾತ್ರಿಯಲ್ಲಿ ಮಾತ್ರ ಶ್ವಸನ ಮಾಡುತ್ತವೆ ಎಂಬುದು ತಪ್ಪು ಕಲ್ಪನೆ — ಅವು ಯಾವಾಗಲೂ ಶ್ವಸಿಸುತ್ತವೆ.",
+    "english_translation": "Living organisms use oxygen to release energy from food and give off carbon dioxide. This is called respiration. It is a misconception that plants respire only at night — they respire all the time."
+  },
+  {
+    "id": "hi-sci-7-acids-bases",
+    "subject": "chemistry",
+    "class": 7,
+    "board": "CBSE",
+    "language": "hi",
+    "topic": "Acids, bases, and salts",
+    "excerpt": "खट्टे स्वाद वाले पदार्थ अम्ल कहलाते हैं। नीले लिटमस पत्र को लाल कर देने वाले पदार्थ अम्ल होते हैं। कड़वे स्वाद वाले और साबुन जैसे फिसलन वाले पदार्थ क्षार कहलाते हैं। लाल लिटमस पत्र को नीला कर देने वाले पदार्थ क्षार हैं।",
+    "english_translation": "Sour-tasting substances are called acids. Substances that turn blue litmus paper red are acids. Bitter-tasting and soapy-feeling substances are called bases. Substances that turn red litmus paper blue are bases."
+  },
+  {
+    "id": "en-sci-8-cell",
+    "subject": "biology",
+    "class": 8,
+    "board": "NCERT",
+    "language": "en",
+    "topic": "The cell — structure and function",
+    "excerpt": "The cell is the basic structural and functional unit of life. Every cell has a cell membrane, cytoplasm, and a nucleus. Plant cells additionally have a rigid cell wall and chloroplasts. Animal cells lack both. The nucleus controls the activities of the cell and contains DNA.",
+    "english_translation": null
+  },
+  {
+    "id": "en-math-7-fractions",
+    "subject": "math",
+    "class": 7,
+    "board": "NCERT",
+    "language": "en",
+    "topic": "Fractions — multiplication",
+    "excerpt": "To multiply two fractions, multiply the numerators together and multiply the denominators together. (a/b) × (c/d) = (a×c) / (b×d). Always reduce the result to lowest terms. Example: (2/3) × (3/4) = 6/12 = 1/2.",
+    "english_translation": null
+  },
+  {
+    "id": "hi-math-8-linear-eq",
+    "subject": "math",
+    "class": 8,
+    "board": "CBSE",
+    "language": "hi",
+    "topic": "Linear equations in one variable",
+    "excerpt": "एक चर वाले रैखिक समीकरण में चर का अधिकतम घात 1 होता है। समीकरण को हल करने के लिए दोनों पक्षों पर समान संक्रिया करते हैं ताकि चर एक तरफ अकेला रह जाए। उदाहरण: 2x + 3 = 11 हल करें — दोनों पक्षों से 3 घटाने पर 2x = 8, फिर दोनों पक्षों को 2 से भाग देने पर x = 4।",
+    "english_translation": "In a linear equation in one variable, the highest power of the variable is 1. To solve, perform the same operation on both sides so the variable is isolated. Example: solve 2x + 3 = 11 — subtract 3 from both sides giving 2x = 8, then divide both sides by 2 giving x = 4."
+  },
+  {
+    "id": "en-sci-7-heat",
+    "subject": "physics",
+    "class": 7,
+    "board": "NCERT",
+    "language": "en",
+    "topic": "Heat and temperature",
+    "excerpt": "Heat is the form of energy that flows between two objects when they are at different temperatures. Temperature is measured in degrees Celsius (°C) using a thermometer. Heat always flows from a body at higher temperature to a body at lower temperature, never the other way.",
+    "english_translation": null
+  },
+  {
+    "id": "kn-math-7-ratios",
+    "subject": "math",
+    "class": 7,
+    "board": "Karnataka State Board",
+    "language": "kn",
+    "topic": "Ratio and proportion",
+    "excerpt": "ಎರಡು ರಾಶಿಗಳನ್ನು ಹೋಲಿಸಲು ಬಳಸುವ ಸಂಬಂಧವನ್ನು ಅನುಪಾತ ಎನ್ನುತ್ತಾರೆ. a:b ಅನುಪಾತವನ್ನು ಭಿನ್ನರಾಶಿ a/b ಎಂದು ಬರೆಯಬಹುದು. ಎರಡು ಅನುಪಾತಗಳು ಸಮವಾದರೆ ಅವು ಪ್ರಮಾಣದಲ್ಲಿವೆ ಎನ್ನುತ್ತೇವೆ. ಉದಾಹರಣೆ: 2:3 = 4:6.",
+    "english_translation": "A ratio is a relation used to compare two quantities. The ratio a:b can be written as the fraction a/b. Two ratios that are equal are said to be in proportion. Example: 2:3 = 4:6."
+  },
+  {
+    "id": "en-hist-7-mughal",
+    "subject": "history",
+    "class": 7,
+    "board": "NCERT",
+    "language": "en",
+    "topic": "The Mughal Empire — early rulers",
+    "excerpt": "Babur founded the Mughal Empire in 1526 after defeating Ibrahim Lodi at the First Battle of Panipat. He was succeeded by his son Humayun. Akbar, Humayun's son, became one of the most influential Mughal emperors and is known for his policy of religious tolerance and the centralised administrative system he built.",
+    "english_translation": null
+  },
+  {
+    "id": "en-geo-7-monsoon",
+    "subject": "geography",
+    "class": 7,
+    "board": "NCERT",
+    "language": "en",
+    "topic": "Indian monsoon",
+    "excerpt": "The Indian monsoon is a seasonal reversal of winds. The southwest monsoon, from June to September, brings most of India's annual rainfall as moisture-laden winds from the Indian Ocean blow inland. The northeast monsoon, from October to December, mainly brings rainfall to Tamil Nadu and the southeastern coast.",
+    "english_translation": null
+  },
+  {
+    "id": "en-sci-8-light",
+    "subject": "physics",
+    "class": 8,
+    "board": "NCERT",
+    "language": "en",
+    "topic": "Light — reflection",
+    "excerpt": "When a ray of light strikes a smooth surface, it bounces back. This is called reflection. The angle of incidence equals the angle of reflection, and both are measured from the normal — the line perpendicular to the surface at the point of incidence. The incident ray, the reflected ray, and the normal all lie in the same plane.",
+    "english_translation": null
+  },
+  {
+    "id": "hi-sci-8-microbes",
+    "subject": "biology",
+    "class": 8,
+    "board": "CBSE",
+    "language": "hi",
+    "topic": "Microorganisms — friend and foe",
+    "excerpt": "सूक्ष्मजीव बहुत छोटे जीव हैं जो बिना सूक्ष्मदर्शी के नहीं देखे जा सकते। ये चार प्रमुख समूहों में बांटे जाते हैं: जीवाणु (बैक्टीरिया), कवक (फंजाई), प्रोटोजोआ और कुछ शैवाल। विषाणु (वायरस) सजीव कोशिका के भीतर ही गुणन कर सकते हैं। दही जमाने में लैक्टोबैसिलस जीवाणु का उपयोग होता है।",
+    "english_translation": "Microorganisms are very small living things that cannot be seen without a microscope. They are divided into four major groups: bacteria, fungi, protozoa, and some algae. Viruses can multiply only inside a living cell. The Lactobacillus bacterium is used to set curd."
+  },
+  {
+    "id": "en-math-8-square-roots",
+    "subject": "math",
+    "class": 8,
+    "board": "NCERT",
+    "language": "en",
+    "topic": "Squares and square roots",
+    "excerpt": "The square of a number is that number multiplied by itself: 5² = 25. The square root of a number is the value that, when multiplied by itself, gives the original number: √25 = 5. Every positive number has two square roots, one positive and one negative; by convention √n denotes the positive root.",
+    "english_translation": null
+  },
+  {
+    "id": "kn-sci-8-sound",
+    "subject": "physics",
+    "class": 8,
+    "board": "Karnataka State Board",
+    "language": "kn",
+    "topic": "Sound",
+    "excerpt": "ಶಬ್ದವು ವಸ್ತುಗಳ ಕಂಪನದಿಂದ ಉಂಟಾಗುತ್ತದೆ. ಶಬ್ದವು ಗಾಳಿ, ನೀರು ಮತ್ತು ಘನ ಪದಾರ್ಥಗಳ ಮೂಲಕ ಅಲೆಯ ರೂಪದಲ್ಲಿ ಸಾಗುತ್ತದೆ ಆದರೆ ನಿರ್ವಾತದಲ್ಲಿ ಸಾಗುವುದಿಲ್ಲ. ಶಬ್ದದ ಆವರ್ತಾಂಕವನ್ನು ಹರ್ಟ್ಜ್ (Hz) ಯಲ್ಲಿ ಅಳೆಯಲಾಗುತ್ತದೆ.",
+    "english_translation": "Sound is produced by the vibration of objects. Sound travels in the form of waves through air, water, and solids but cannot travel through a vacuum. The frequency of sound is measured in hertz (Hz)."
+  }
+]

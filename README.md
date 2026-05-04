@@ -38,6 +38,8 @@ If a key is missing, that model degrades to a "fail" card in the consensus panel
 4. **Upload the algebra image:** menu → *Demo scenarios* → *Class 8 · Hindi · Algebra image upload*. Claude Sonnet's vision capability extracts "2x + 3 = 11" from a Hindi worksheet page; the consensus engine solves it step-by-step.
 5. **Run the hallucination scenario:** menu → *The hallucination catch — who invented zero?* One model is hard-coded (clearly labelled in `lib/consensus.ts`) to confidently claim Aryabhata invented zero. Watch the engine flag the disagreement, downgrade the verdict, and choose the answer from the models that survived fault-tolerant fusion.
 
+> **Running this for Dr. Iyengar or an investor?** See **[DEMOS.md](DEMOS.md)** for full presenter walkthroughs — narration cues, what to point at, and what to do if any scenario doesn't behave as described.
+
 ---
 
 ## What's real and what's simulated

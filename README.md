@@ -39,6 +39,8 @@ If a key is missing, that model degrades to a "fail" card in the consensus panel
 5. **Run the hallucination scenario:** menu → *The hallucination catch — who invented zero?* One model is hard-coded (clearly labelled in `lib/consensus.ts`) to confidently claim Aryabhata invented zero. Watch the engine flag the disagreement, downgrade the verdict, and choose the answer from the models that survived fault-tolerant fusion.
 
 > **Running this for Dr. Iyengar or an investor?** See **[DEMOS.md](DEMOS.md)** for full presenter walkthroughs — narration cues, what to point at, and what to do if any scenario doesn't behave as described.
+>
+> **Need a one-pager?** Open <http://localhost:3000/infographic.html> (or [`public/infographic.html`](public/infographic.html) directly). Single self-contained HTML, prints cleanly to A4 PDF for pitch decks, screenshots cleanly for slides.
 
 ---
 

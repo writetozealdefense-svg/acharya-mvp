@@ -1,0 +1,663 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Acharya — the AI tutor that can admit it might be wrong</title>
+<style>
+  :root {
+    --green:        #075E54;
+    --green-dark:   #054C44;
+    --green-soft:   #E8F1EF;
+    --gold:         #C8965B;
+    --gold-soft:    #F5EDE0;
+    --bubble:       #DCF8C6;
+    --paper:        #FCFAF6;
+    --ink:          #111B21;
+    --ink-soft:     #4A5C66;
+    --line:         #E3DDD2;
+    --good:         #16a34a;
+    --warn:         #d97706;
+    --bad:          #dc2626;
+    --claude:       #C97A4A;
+    --openai:       #10A37F;
+    --gemini:       #4285F4;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: #ECE7DD;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.4;
+  }
+  .page {
+    max-width: 1180px;
+    margin: 24px auto;
+    background: var(--paper);
+    box-shadow: 0 6px 32px rgba(0,0,0,0.08);
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* ───────────── Hero ───────────── */
+  .hero {
+    background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+    color: #fff;
+    padding: 36px 44px 30px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(255,255,255,0.05) 0, transparent 60%),
+      radial-gradient(circle at 80% 70%, rgba(200,150,90,0.08) 0, transparent 50%);
+    pointer-events: none;
+  }
+  .hero-row {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-badge {
+    width: 78px;
+    height: 78px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    font-size: 42px;
+    font-weight: 600;
+    flex-shrink: 0;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+    font-family: Georgia, serif;
+  }
+  .hero h1 {
+    margin: 0 0 6px;
+    font-size: 44px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+  }
+  .hero h1 .accent { color: var(--gold); }
+  .hero .tagline {
+    margin: 0;
+    font-size: 17px;
+    color: rgba(255,255,255,0.85);
+    max-width: 720px;
+  }
+  .hero-meta {
+    margin-top: 18px;
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: rgba(255,255,255,0.78);
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    padding-top: 14px;
+  }
+  .hero-meta b { color: #fff; font-weight: 600; }
+
+  /* ───────────── Section frame ───────────── */
+  section {
+    padding: 32px 44px;
+    border-top: 1px solid var(--line);
+  }
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 11px;
+    color: var(--gold);
+    font-weight: 600;
+    margin: 0 0 6px;
+  }
+  h2 {
+    font-size: 26px;
+    margin: 0 0 18px;
+    color: var(--green);
+    letter-spacing: -0.3px;
+    font-weight: 600;
+  }
+  h3 { font-size: 15px; margin: 0 0 6px; color: var(--ink); font-weight: 600; }
+  p  { margin: 0 0 10px; color: var(--ink-soft); font-size: 14px; }
+
+  /* ───────────── Two-column problem/solution ───────────── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+  .panel {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 20px 22px;
+    background: #fff;
+  }
+  .panel.tinted-bad {
+    background: #FEF7F4;
+    border-color: #F2D6CB;
+  }
+  .panel.tinted-good {
+    background: var(--green-soft);
+    border-color: #BFD8D2;
+  }
+  .panel ul {
+    margin: 8px 0 0;
+    padding-left: 18px;
+    color: var(--ink-soft);
+    font-size: 14px;
+  }
+  .panel li { margin-bottom: 6px; }
+
+  .stat-row {
+    display: flex;
+    gap: 32px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+  .stat .num {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--green);
+    line-height: 1;
+  }
+  .stat .lbl {
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-top: 4px;
+    max-width: 140px;
+  }
+
+  /* ───────────── Flow diagram ───────────── */
+  .flow {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 28px;
+  }
+  .flow-grid {
+    display: grid;
+    grid-template-columns: 150px 1fr 130px 130px 1fr;
+    gap: 0;
+    align-items: center;
+    column-gap: 0;
+  }
+  .node {
+    border-radius: 10px;
+    padding: 12px 14px;
+    text-align: center;
+    background: #fff;
+    border: 2px solid var(--line);
+    min-height: 72px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+  }
+  .node .nm { font-size: 13px; font-weight: 600; color: var(--ink); }
+  .node .sub { font-size: 11px; color: var(--ink-soft); margin-top: 3px; }
+  .node.q   { background: var(--bubble); border-color: #B8DDA0; }
+  .node.claude  { border-color: var(--claude);  background: #FBEEE5; }
+  .node.openai  { border-color: var(--openai);  background: #E5F5EF; }
+  .node.gemini  { border-color: var(--gemini);  background: #E5EEFB; }
+  .node.judge   { border-color: var(--gold);    background: var(--gold-soft); }
+  .node.verdict { border-color: var(--green);   background: var(--green-soft); }
+  .node-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .arrow {
+    height: 2px;
+    background: var(--line);
+    position: relative;
+    margin: 0 6px;
+  }
+  .arrow::after {
+    content: "";
+    position: absolute;
+    right: -1px;
+    top: -4px;
+    border: 5px solid transparent;
+    border-left-color: var(--line);
+    border-right: 0;
+  }
+  .arrow.fan {
+    width: 100%;
+    height: 100%;
+    background: none;
+  }
+  .fan-svg { width: 100%; height: 240px; display: block; }
+
+  .flow-legend {
+    margin-top: 18px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+  .flow-legend .step {
+    border-left: 3px solid var(--gold);
+    padding: 4px 10px;
+  }
+  .flow-legend .step b { display: block; color: var(--ink); font-size: 13px; margin-bottom: 2px; }
+
+  /* ───────────── Verdicts row ───────────── */
+  .verdicts {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 18px;
+  }
+  .v-card {
+    border: 2px solid;
+    border-radius: 10px;
+    padding: 18px;
+    background: #fff;
+  }
+  .v-card.good { border-color: var(--good);  background: #F0FDF4; }
+  .v-card.warn { border-color: var(--warn);  background: #FFFBEB; }
+  .v-card.bad  { border-color: var(--bad);   background: #FEF2F2; }
+  .v-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    color: #fff;
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  .v-icon.good { background: var(--good); }
+  .v-icon.warn { background: var(--warn); }
+  .v-icon.bad  { background: var(--bad);  }
+  .v-title { font-weight: 600; font-size: 16px; margin-bottom: 4px; }
+  .v-rule  { font-size: 12px; color: var(--ink-soft); font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
+  .v-desc  { font-size: 13px; color: var(--ink-soft); margin-top: 8px; }
+
+  /* ───────────── Intake & curriculum ───────────── */
+  .three-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 18px;
+  }
+  .intake-card {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 18px 20px;
+    background: #fff;
+  }
+  .intake-card .ico {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--gold-soft);
+    color: var(--gold);
+    display: grid;
+    place-items: center;
+    margin-bottom: 10px;
+  }
+  .intake-card h3 { margin-bottom: 4px; }
+  .intake-card p { font-size: 13px; margin-bottom: 0; }
+
+  /* ───────────── Pedigree ───────────── */
+  .pedigree {
+    background: linear-gradient(135deg, var(--gold-soft) 0%, #FAF1DF 100%);
+    border-radius: 10px;
+    padding: 28px 32px;
+    border-left: 6px solid var(--gold);
+  }
+  .pedigree-row {
+    display: grid;
+    grid-template-columns: 1fr 200px;
+    gap: 24px;
+    align-items: center;
+  }
+  .pedigree h2 { color: var(--gold); margin-bottom: 8px; }
+  .pedigree p { color: #5a4424; font-size: 14px; }
+  .pedigree .quote {
+    font-style: italic;
+    font-size: 13px;
+    color: #6b5430;
+    border-left: 2px solid var(--gold);
+    padding-left: 12px;
+    margin-top: 12px;
+  }
+  .pedigree-meta {
+    background: #fff;
+    border-radius: 8px;
+    padding: 14px;
+    border: 1px solid #E2C896;
+    text-align: center;
+  }
+  .pedigree-meta .yr { font-size: 22px; font-weight: 600; color: var(--gold); line-height: 1; }
+  .pedigree-meta .yr-lbl { font-size: 11px; color: var(--ink-soft); margin-top: 4px; }
+  .pedigree-meta hr { border: none; border-top: 1px solid var(--line); margin: 10px 0; }
+
+  /* ───────────── Stack ───────────── */
+  .stack-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  .stack-item {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 12px;
+  }
+  .stack-item b { display: block; color: var(--ink); font-size: 13px; margin-bottom: 2px; }
+  .stack-item span { color: var(--ink-soft); }
+
+  /* ───────────── Footer ───────────── */
+  footer {
+    background: var(--green);
+    color: rgba(255,255,255,0.85);
+    padding: 20px 44px;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  footer b { color: #fff; }
+  footer a { color: var(--gold); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  /* ───────────── Print ───────────── */
+  @media print {
+    body { background: white; }
+    .page { box-shadow: none; margin: 0; max-width: 100%; }
+    section, .hero, footer { page-break-inside: avoid; }
+    @page { size: A4; margin: 8mm; }
+  }
+</style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- HERO -->
+    <header class="hero">
+      <div class="hero-row">
+        <div class="hero-badge">A</div>
+        <div>
+          <h1>Acharya<span class="accent">.</span></h1>
+          <p class="tagline">
+            A vernacular AI tutor for Indian school children. Built on
+            <b>Brooks–Iyengar fault-tolerant consensus</b> across three independent LLMs —
+            so when one model hallucinates, the other two catch it before a child sees it.
+          </p>
+        </div>
+      </div>
+      <div class="hero-meta">
+        <span><b>Class 6–10</b> · CBSE, NCERT, State Boards</span>
+        <span><b>Kannada · हिंदी · English</b> · more languages on the roadmap</span>
+        <span><b>WhatsApp-native</b> — no app to install</span>
+        <span><b>3 LLMs</b> in parallel · Anthropic · OpenAI · Google</span>
+      </div>
+    </header>
+
+    <!-- PROBLEM / SOLUTION -->
+    <section>
+      <p class="eyebrow">Why Acharya exists</p>
+      <h2>The hallucination problem, in the country least equipped to catch it</h2>
+      <div class="two-col">
+        <div class="panel tinted-bad">
+          <h3>The problem with single-LLM tutors</h3>
+          <ul>
+            <li>One model, one voice, one chance to be wrong — confidently.</li>
+            <li>A Class 7 child cannot fact-check a chatbot. Neither can their parent.</li>
+            <li>Most Indian school children study in vernacular languages where models are weaker and hallucinations are more frequent.</li>
+            <li>"AI-generated, may be inaccurate" disclaimers don't fix the lesson.</li>
+          </ul>
+        </div>
+        <div class="panel tinted-good">
+          <h3>What Acharya does differently</h3>
+          <ul>
+            <li>Every question runs through <b>three independent LLMs in parallel</b>.</li>
+            <li>A fourth judge model scores how much each model's claims agree with the others'.</li>
+            <li>Brooks–Iyengar fault-tolerant fusion discards outliers and picks the answer that the surviving consensus supports.</li>
+            <li>Every reply ships with a verdict — <b>Verified</b>, <b>Likely correct</b>, or <b>Needs human review</b> — so parents see exactly how confident the system is.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section>
+      <p class="eyebrow">How it works</p>
+      <h2>One question. Three witnesses. One verifiable answer.</h2>
+      <div class="flow">
+        <svg viewBox="0 0 1080 280" class="fan-svg" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#94A3B8" />
+            </marker>
+            <marker id="arrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#075E54" />
+            </marker>
+          </defs>
+
+          <!-- 1. Question -->
+          <g>
+            <rect x="10" y="115" rx="10" ry="10" width="170" height="60" fill="#DCF8C6" stroke="#75BD63" stroke-width="2"/>
+            <text x="95" y="138" text-anchor="middle" font-size="13" font-weight="600" fill="#111B21">Student question</text>
+            <text x="95" y="156" text-anchor="middle" font-size="11" fill="#4A5C66">text · photo · voice</text>
+          </g>
+
+          <!-- Fanout lines -->
+          <path d="M 180 145 C 230 145, 250 50,  315 50"  stroke="#94A3B8" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+          <path d="M 180 145 C 230 145, 250 145, 315 145" stroke="#94A3B8" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+          <path d="M 180 145 C 230 145, 250 240, 315 240" stroke="#94A3B8" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+
+          <!-- 2. Three models -->
+          <g>
+            <rect x="320" y="20" rx="8" ry="8" width="170" height="60" fill="#FBEEE5" stroke="#C97A4A" stroke-width="2"/>
+            <text x="405" y="44" text-anchor="middle" font-size="13" font-weight="600" fill="#111B21">Claude Sonnet 4.5</text>
+            <text x="405" y="62" text-anchor="middle" font-size="11" fill="#4A5C66">Anthropic</text>
+          </g>
+          <g>
+            <rect x="320" y="115" rx="8" ry="8" width="170" height="60" fill="#E5F5EF" stroke="#10A37F" stroke-width="2"/>
+            <text x="405" y="139" text-anchor="middle" font-size="13" font-weight="600" fill="#111B21">GPT-4o-mini</text>
+            <text x="405" y="157" text-anchor="middle" font-size="11" fill="#4A5C66">OpenAI</text>
+          </g>
+          <g>
+            <rect x="320" y="210" rx="8" ry="8" width="170" height="60" fill="#E5EEFB" stroke="#4285F4" stroke-width="2"/>
+            <text x="405" y="234" text-anchor="middle" font-size="13" font-weight="600" fill="#111B21">Gemini 2.0 Flash</text>
+            <text x="405" y="252" text-anchor="middle" font-size="11" fill="#4A5C66">Google</text>
+          </g>
+
+          <!-- Fanin lines into Judge -->
+          <path d="M 490 50  C 540 50,  560 145, 615 145" stroke="#94A3B8" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+          <path d="M 490 145 C 540 145, 560 145, 615 145" stroke="#94A3B8" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+          <path d="M 490 240 C 540 240, 560 145, 615 145" stroke="#94A3B8" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+
+          <!-- 3. Judge -->
+          <g>
+            <rect x="620" y="105" rx="10" ry="10" width="170" height="80" fill="#F5EDE0" stroke="#C8965B" stroke-width="2"/>
+            <text x="705" y="132" text-anchor="middle" font-size="13" font-weight="600" fill="#111B21">Fact-agreement</text>
+            <text x="705" y="150" text-anchor="middle" font-size="13" font-weight="600" fill="#111B21">judge</text>
+            <text x="705" y="170" text-anchor="middle" font-size="11" fill="#4A5C66">scores each fact 0 / 1 / 2</text>
+          </g>
+
+          <path d="M 790 145 L 870 145" stroke="#075E54" stroke-width="2" fill="none" marker-end="url(#arrG)"/>
+
+          <!-- 4. Fusion + verdict -->
+          <g>
+            <rect x="875" y="95" rx="10" ry="10" width="190" height="100" fill="#E8F1EF" stroke="#075E54" stroke-width="2"/>
+            <text x="970" y="122" text-anchor="middle" font-size="13" font-weight="600" fill="#075E54">Brooks–Iyengar fusion</text>
+            <text x="970" y="142" text-anchor="middle" font-size="11" fill="#4A5C66">discard outliers</text>
+            <text x="970" y="158" text-anchor="middle" font-size="11" fill="#4A5C66">pick highest-confidence</text>
+            <text x="970" y="174" text-anchor="middle" font-size="11" fill="#4A5C66">model whose facts survive</text>
+          </g>
+
+          <!-- Verdict pill -->
+          <g>
+            <circle cx="970" cy="220" r="22" fill="#16a34a"/>
+            <text x="970" y="227" text-anchor="middle" font-size="20" font-weight="600" fill="#fff">✓</text>
+            <text x="970" y="265" text-anchor="middle" font-size="11" font-weight="600" fill="#075E54">Verdict to student</text>
+          </g>
+        </svg>
+
+        <div class="flow-legend">
+          <div class="step"><b>A · Subject vote</b>≥ 2 of 3 must agree on the subject, else flag for review.</div>
+          <div class="step"><b>B · Fact scoring</b>Judge scores every fact 0–2 against the other two models' claims.</div>
+          <div class="step"><b>C · Fusion</b>Discard outliers; pick highest-confidence model whose facts survive.</div>
+          <div class="step"><b>D · Verdict</b>Threshold rules assign Verified, Likely correct, or Needs review.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VERDICTS -->
+    <section>
+      <p class="eyebrow">Every answer ships with a verdict</p>
+      <h2>The parent never has to guess how confident the AI is.</h2>
+      <div class="verdicts">
+        <div class="v-card good">
+          <div class="v-icon good">✓</div>
+          <div class="v-title">Verified</div>
+          <div class="v-rule">3 / 3 subject agree · ≥ 80% facts agree</div>
+          <p class="v-desc">All three models converged on the same subject and most of the underlying facts cross-validated. Safe to teach.</p>
+        </div>
+        <div class="v-card warn">
+          <div class="v-icon warn">⚠</div>
+          <div class="v-title">Likely correct</div>
+          <div class="v-rule">2 / 3 subject agree · ≥ 60% facts agree</div>
+          <p class="v-desc">A majority converged but at least one model disagreed. Answer is delivered with a soft caveat in the bubble.</p>
+        </div>
+        <div class="v-card bad">
+          <div class="v-icon bad">✕</div>
+          <div class="v-title">Needs human review</div>
+          <div class="v-rule">below either threshold</div>
+          <p class="v-desc">Disagreement is too sharp to trust. Surfaced to the parent dashboard for follow-up — not delivered as fact.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTAKE -->
+    <section>
+      <p class="eyebrow">How a child actually uses it</p>
+      <h2>Three ways in. One WhatsApp thread out.</h2>
+      <div class="three-col">
+        <div class="intake-card">
+          <div class="ico">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </div>
+          <h3>Type the question</h3>
+          <p>Kannada, Hindi, or English keyboard — Acharya detects the language and replies in kind. Math notation rendered with KaTeX.</p>
+        </div>
+        <div class="intake-card">
+          <div class="ico">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          </div>
+          <h3>Snap the page</h3>
+          <p>Photograph any textbook page. Claude Sonnet's native vision finds the question on the page — even circled or marked — and the consensus engine solves it.</p>
+        </div>
+        <div class="intake-card">
+          <div class="ico">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+          </div>
+          <h3>Speak the question</h3>
+          <p>Voice-to-text intake on the roadmap — preserves the WhatsApp voice-note pattern that families across rural India already use every day.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PEDIGREE -->
+    <section>
+      <div class="pedigree">
+        <p class="eyebrow" style="color: var(--gold-dark, #8a6334)">The pedigree</p>
+        <div class="pedigree-row">
+          <div>
+            <h2>Why Brooks–Iyengar?</h2>
+            <p>
+              The Brooks–Iyengar algorithm, introduced by <b>Dr. S. S. Iyengar</b> and Richard Brooks,
+              was originally a fault-tolerant consensus protocol for distributed sensor networks —
+              fusing readings from multiple sensors when any minority of them might be faulty.
+            </p>
+            <p>
+              We treat each LLM as a sensor. Each one observes the same input — the student's
+              question — and emits a noisy, occasionally faulty reading. The Brooks–Iyengar
+              fusion step is structurally identical: tolerate a minority of faulty signals,
+              fuse the rest into a single defensible output.
+            </p>
+            <p class="quote">
+              "The product is, structurally, a textbook application of the algorithm to LLM outputs
+              treated as faulty sensors — the agreement panel is the same kind of graph
+              distributed-systems researchers have been reading for two decades."
+            </p>
+          </div>
+          <div class="pedigree-meta">
+            <div class="yr">1996</div>
+            <div class="yr-lbl">Brooks–Iyengar published</div>
+            <hr/>
+            <div class="yr">3</div>
+            <div class="yr-lbl">LLMs treated as independent sensors</div>
+            <hr/>
+            <div class="yr">2026</div>
+            <div class="yr-lbl">Applied to vernacular education</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STACK / TRUST SIGNALS -->
+    <section>
+      <p class="eyebrow">Built on</p>
+      <h2>Production-grade infrastructure, day one.</h2>
+      <div class="stack-grid">
+        <div class="stack-item"><b>Anthropic</b><span>Claude Sonnet 4.5 · vision · judge</span></div>
+        <div class="stack-item"><b>OpenAI</b><span>GPT-4o-mini · independent vote</span></div>
+        <div class="stack-item"><b>Google</b><span>Gemini 2.0 Flash · independent vote</span></div>
+        <div class="stack-item"><b>Meta</b><span>WhatsApp Business API (production target)</span></div>
+        <div class="stack-item"><b>NCERT · CBSE · State Boards</b><span>Curriculum-grounded retrieval</span></div>
+        <div class="stack-item"><b>Next.js + TypeScript</b><span>Vercel-ready demo + API routes</span></div>
+        <div class="stack-item"><b>KaTeX</b><span>First-class math rendering</span></div>
+        <div class="stack-item"><b>Brooks–Iyengar</b><span>The algorithm at the heart of it all</span></div>
+      </div>
+
+      <div class="stat-row" style="margin-top: 22px; border-top: 1px solid var(--line); padding-top: 18px;">
+        <div class="stat">
+          <div class="num">~7s</div>
+          <div class="lbl">end-to-end latency from question to verified answer</div>
+        </div>
+        <div class="stat">
+          <div class="num">3 + 1</div>
+          <div class="lbl">model calls per question — three answerers + one judge</div>
+        </div>
+        <div class="stat">
+          <div class="num">15s</div>
+          <div class="lbl">per-model timeout · failed models become non-votes</div>
+        </div>
+        <div class="stat">
+          <div class="num">0</div>
+          <div class="lbl">data retained for child users — no training, no resale</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div>
+        <b>Acharya · MVP demo</b> — local Next.js simulation of the WhatsApp experience,
+        running real LLM consensus against live APIs. Production target: WhatsApp via Meta Business API.
+      </div>
+      <div>
+        <a href="https://github.com/writetozealdefense-svg/acharya-mvp" target="_blank" rel="noreferrer">github.com/writetozealdefense-svg/acharya-mvp</a>
+      </div>
+    </footer>
+
+  </div>
+</body>
+</html>

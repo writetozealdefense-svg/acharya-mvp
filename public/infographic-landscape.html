@@ -1,0 +1,574 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Acharya — landscape one-pager (1920×1080)</title>
+<style>
+  :root {
+    --green:        #075E54;
+    --green-dark:   #054C44;
+    --green-soft:   #E8F1EF;
+    --gold:         #C8965B;
+    --gold-soft:    #F5EDE0;
+    --bubble:       #DCF8C6;
+    --paper:        #FCFAF6;
+    --ink:          #111B21;
+    --ink-soft:     #4A5C66;
+    --line:         #E3DDD2;
+    --good:         #16a34a;
+    --warn:         #d97706;
+    --bad:          #dc2626;
+    --claude:       #C97A4A;
+    --openai:       #10A37F;
+    --gemini:       #4285F4;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: #ECE7DD;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.4;
+  }
+
+  /* The slide is locked to a fixed 1920×1080 — this is what gets screenshotted. */
+  .slide {
+    width: 1920px;
+    height: 1080px;
+    margin: 0 auto;
+    background: var(--paper);
+    overflow: hidden;
+    display: grid;
+    grid-template-rows: 130px 1fr 76px;
+  }
+
+  /* ───────────── Hero strip ───────────── */
+  .hero {
+    background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+    color: #fff;
+    padding: 0 56px;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 80% 30%, rgba(200,150,90,0.10) 0, transparent 50%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    width: 78px;
+    height: 78px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    font-size: 44px;
+    font-weight: 600;
+    flex-shrink: 0;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+    font-family: Georgia, serif;
+    z-index: 1;
+  }
+  .hero-text { z-index: 1; flex: 1; }
+  .hero h1 {
+    margin: 0;
+    font-size: 44px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    line-height: 1;
+  }
+  .hero h1 .accent { color: var(--gold); }
+  .hero .tagline {
+    margin: 6px 0 0;
+    font-size: 17px;
+    color: rgba(255,255,255,0.85);
+    max-width: 1100px;
+  }
+  .hero-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.85);
+    z-index: 1;
+    text-align: right;
+  }
+  .hero-meta b { color: #fff; font-weight: 600; }
+
+  /* ───────────── Main content: two columns ───────────── */
+  .main {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 24px;
+    padding: 28px 40px;
+    overflow: hidden;
+  }
+
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 10px;
+    color: var(--gold);
+    font-weight: 600;
+    margin: 0 0 4px;
+  }
+  h2 {
+    font-size: 22px;
+    margin: 0 0 14px;
+    color: var(--green);
+    letter-spacing: -0.3px;
+    font-weight: 600;
+  }
+  h3 { font-size: 14px; margin: 0 0 4px; color: var(--ink); font-weight: 600; }
+  p  { margin: 0 0 8px; color: var(--ink-soft); font-size: 13px; line-height: 1.4; }
+
+  /* ───────────── LEFT column: flow diagram + verdicts ───────────── */
+  .left {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 16px;
+  }
+  .flow-wrap {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 18px 20px;
+  }
+  .fan-svg { width: 100%; height: 220px; display: block; }
+  .flow-legend {
+    margin-top: 12px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    font-size: 11px;
+    color: var(--ink-soft);
+  }
+  .flow-legend .step {
+    border-left: 3px solid var(--gold);
+    padding: 2px 8px;
+    line-height: 1.35;
+  }
+  .flow-legend .step b { display: block; color: var(--ink); font-size: 12px; margin-bottom: 2px; }
+
+  /* Verdict cards — landscape: 3 in a row */
+  .verdicts {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+  }
+  .v-card {
+    border: 2px solid;
+    border-radius: 10px;
+    padding: 12px 14px;
+    background: #fff;
+  }
+  .v-card.good { border-color: var(--good);  background: #F0FDF4; }
+  .v-card.warn { border-color: var(--warn);  background: #FFFBEB; }
+  .v-card.bad  { border-color: var(--bad);   background: #FEF2F2; }
+  .v-row { display: flex; align-items: center; gap: 10px; }
+  .v-icon {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    color: #fff; font-weight: 600; font-size: 16px;
+    flex-shrink: 0;
+  }
+  .v-icon.good { background: var(--good); }
+  .v-icon.warn { background: var(--warn); }
+  .v-icon.bad  { background: var(--bad);  }
+  .v-title { font-weight: 600; font-size: 14px; line-height: 1.1; }
+  .v-rule  { font-size: 10px; color: var(--ink-soft); font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; margin-top: 2px; }
+  .v-desc  { font-size: 11px; color: var(--ink-soft); margin: 6px 0 0; line-height: 1.35; }
+
+  /* ───────────── RIGHT column: problem/solution + pedigree + intake ───────────── */
+  .right {
+    display: grid;
+    grid-template-rows: auto auto auto auto;
+    gap: 14px;
+  }
+
+  /* Problem / Solution stacked compactly */
+  .twopanel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .panel {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 12px 14px;
+    background: #fff;
+  }
+  .panel.tinted-bad {
+    background: #FEF7F4;
+    border-color: #F2D6CB;
+  }
+  .panel.tinted-good {
+    background: var(--green-soft);
+    border-color: #BFD8D2;
+  }
+  .panel ul {
+    margin: 6px 0 0;
+    padding-left: 16px;
+    color: var(--ink-soft);
+    font-size: 12px;
+  }
+  .panel li { margin-bottom: 4px; line-height: 1.35; }
+
+  /* Pedigree */
+  .pedigree {
+    background: linear-gradient(135deg, var(--gold-soft) 0%, #FAF1DF 100%);
+    border-radius: 10px;
+    padding: 16px 20px;
+    border-left: 5px solid var(--gold);
+    display: grid;
+    grid-template-columns: 1fr 130px;
+    gap: 18px;
+    align-items: center;
+  }
+  .pedigree h2 { color: var(--gold); margin-bottom: 6px; font-size: 18px; }
+  .pedigree p { color: #5a4424; font-size: 12px; margin-bottom: 6px; line-height: 1.4; }
+  .pedigree-meta {
+    background: #fff;
+    border-radius: 8px;
+    padding: 10px;
+    border: 1px solid #E2C896;
+    text-align: center;
+  }
+  .pedigree-meta .yr { font-size: 22px; font-weight: 700; color: var(--gold); line-height: 1.05; }
+  .pedigree-meta .yr-lbl { font-size: 10px; color: var(--ink-soft); margin-top: 3px; line-height: 1.25; }
+  .pedigree-meta hr { border: none; border-top: 1px solid var(--line); margin: 9px 0; }
+
+  /* Intake row */
+  .intake-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+  }
+  .intake-card {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 10px 12px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .intake-card .ico {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: var(--gold-soft);
+    color: var(--gold);
+    display: grid; place-items: center;
+    flex-shrink: 0;
+  }
+  .intake-card .body { min-width: 0; }
+  .intake-card h3 { font-size: 12px; margin-bottom: 2px; }
+  .intake-card p { font-size: 10.5px; margin: 0; line-height: 1.3; }
+
+  /* Stats strip */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+  .stat-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 10px 12px;
+  }
+  .stat-card .num {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--green);
+    line-height: 1;
+  }
+  .stat-card .lbl {
+    font-size: 10.5px;
+    color: var(--ink-soft);
+    margin-top: 4px;
+    line-height: 1.3;
+  }
+
+  /* ───────────── Footer ───────────── */
+  footer {
+    background: var(--green);
+    color: rgba(255,255,255,0.85);
+    padding: 0 40px;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  footer b { color: #fff; }
+  footer a { color: var(--gold); text-decoration: none; }
+  footer .stack-mini { font-size: 11px; color: rgba(255,255,255,0.7); }
+  footer .stack-mini b { color: #fff; }
+
+</style>
+</head>
+<body>
+  <div class="slide">
+
+    <!-- HERO -->
+    <header class="hero">
+      <div class="hero-badge">A</div>
+      <div class="hero-text">
+        <h1>Acharya<span class="accent">.</span></h1>
+        <p class="tagline">
+          A vernacular AI tutor for Indian school children. Built on
+          <b>Brooks–Iyengar fault-tolerant consensus</b> across three independent LLMs —
+          so when one model hallucinates, the other two catch it before a child sees it.
+        </p>
+      </div>
+      <div class="hero-meta">
+        <span><b>Class 6–10</b> · CBSE · NCERT · State Boards</span>
+        <span><b>ಕನ್ನಡ · हिंदी · English</b></span>
+        <span><b>WhatsApp-native</b> — no app to install</span>
+        <span><b>3 LLMs</b> in parallel · Anthropic · OpenAI · Google</span>
+      </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="main">
+
+      <!-- LEFT COLUMN: flow + verdicts -->
+      <div class="left">
+
+        <!-- Flow diagram -->
+        <div class="flow-wrap">
+          <p class="eyebrow">How it works</p>
+          <h2>One question. Three witnesses. One verifiable answer.</h2>
+          <svg viewBox="0 0 1080 240" class="fan-svg" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#94A3B8" />
+              </marker>
+              <marker id="arrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#075E54" />
+              </marker>
+            </defs>
+
+            <g>
+              <rect x="10" y="95" rx="10" ry="10" width="170" height="60" fill="#DCF8C6" stroke="#75BD63" stroke-width="2"/>
+              <text x="95" y="118" text-anchor="middle" font-size="13" font-weight="600" fill="#111B21">Student question</text>
+              <text x="95" y="136" text-anchor="middle" font-size="11" fill="#4A5C66">text · photo · voice</text>
+            </g>
+
+            <path d="M 180 125 C 230 125, 250 35,  315 35"  stroke="#94A3B8" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+            <path d="M 180 125 C 230 125, 250 125, 315 125" stroke="#94A3B8" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+            <path d="M 180 125 C 230 125, 250 215, 315 215" stroke="#94A3B8" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+
+            <g>
+              <rect x="320" y="5" rx="8" ry="8" width="170" height="60" fill="#FBEEE5" stroke="#C97A4A" stroke-width="2"/>
+              <text x="405" y="29" text-anchor="middle" font-size="13" font-weight="600" fill="#111B21">Claude Sonnet 4.5</text>
+              <text x="405" y="47" text-anchor="middle" font-size="11" fill="#4A5C66">Anthropic</text>
+            </g>
+            <g>
+              <rect x="320" y="95" rx="8" ry="8" width="170" height="60" fill="#E5F5EF" stroke="#10A37F" stroke-width="2"/>
+              <text x="405" y="119" text-anchor="middle" font-size="13" font-weight="600" fill="#111B21">GPT-4o-mini</text>
+              <text x="405" y="137" text-anchor="middle" font-size="11" fill="#4A5C66">OpenAI</text>
+            </g>
+            <g>
+              <rect x="320" y="185" rx="8" ry="8" width="170" height="60" fill="#E5EEFB" stroke="#4285F4" stroke-width="2"/>
+              <text x="405" y="209" text-anchor="middle" font-size="13" font-weight="600" fill="#111B21">Gemini 2.0 Flash</text>
+              <text x="405" y="227" text-anchor="middle" font-size="11" fill="#4A5C66">Google</text>
+            </g>
+
+            <path d="M 490 35  C 540 35,  560 125, 615 125" stroke="#94A3B8" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+            <path d="M 490 125 C 540 125, 560 125, 615 125" stroke="#94A3B8" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+            <path d="M 490 215 C 540 215, 560 125, 615 125" stroke="#94A3B8" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+
+            <g>
+              <rect x="620" y="85" rx="10" ry="10" width="170" height="80" fill="#F5EDE0" stroke="#C8965B" stroke-width="2"/>
+              <text x="705" y="112" text-anchor="middle" font-size="13" font-weight="600" fill="#111B21">Fact-agreement</text>
+              <text x="705" y="130" text-anchor="middle" font-size="13" font-weight="600" fill="#111B21">judge</text>
+              <text x="705" y="150" text-anchor="middle" font-size="11" fill="#4A5C66">scores each fact 0 / 1 / 2</text>
+            </g>
+
+            <path d="M 790 125 L 870 125" stroke="#075E54" stroke-width="2" fill="none" marker-end="url(#arrG)"/>
+
+            <g>
+              <rect x="875" y="75" rx="10" ry="10" width="190" height="100" fill="#E8F1EF" stroke="#075E54" stroke-width="2"/>
+              <text x="970" y="102" text-anchor="middle" font-size="13" font-weight="600" fill="#075E54">Brooks–Iyengar fusion</text>
+              <text x="970" y="122" text-anchor="middle" font-size="11" fill="#4A5C66">discard outliers</text>
+              <text x="970" y="138" text-anchor="middle" font-size="11" fill="#4A5C66">pick highest-confidence</text>
+              <text x="970" y="154" text-anchor="middle" font-size="11" fill="#4A5C66">model whose facts survive</text>
+            </g>
+
+            <g>
+              <circle cx="970" cy="200" r="20" fill="#16a34a"/>
+              <text x="970" y="207" text-anchor="middle" font-size="18" font-weight="600" fill="#fff">✓</text>
+              <text x="970" y="240" text-anchor="middle" font-size="11" font-weight="600" fill="#075E54">Verdict to student</text>
+            </g>
+          </svg>
+          <div class="flow-legend">
+            <div class="step"><b>A · Subject vote</b>≥ 2 of 3 must agree on the subject, else flag for review.</div>
+            <div class="step"><b>B · Fact scoring</b>Judge scores every fact 0–2 against the other two models' claims.</div>
+            <div class="step"><b>C · Fusion</b>Discard outliers; pick highest-confidence eligible model.</div>
+            <div class="step"><b>D · Verdict</b>Threshold rules emit Verified / Likely correct / Needs review.</div>
+          </div>
+        </div>
+
+        <!-- Verdicts -->
+        <div class="verdicts">
+          <div class="v-card good">
+            <div class="v-row">
+              <div class="v-icon good">✓</div>
+              <div>
+                <div class="v-title">Verified</div>
+                <div class="v-rule">3/3 subject · ≥80% facts</div>
+              </div>
+            </div>
+            <p class="v-desc">All three models converged on the same subject and most facts cross-validated.</p>
+          </div>
+          <div class="v-card warn">
+            <div class="v-row">
+              <div class="v-icon warn">⚠</div>
+              <div>
+                <div class="v-title">Likely correct</div>
+                <div class="v-rule">2/3 subject · ≥60% facts</div>
+              </div>
+            </div>
+            <p class="v-desc">A majority converged but one model disagreed — answer ships with a soft caveat.</p>
+          </div>
+          <div class="v-card bad">
+            <div class="v-row">
+              <div class="v-icon bad">✕</div>
+              <div>
+                <div class="v-title">Needs human review</div>
+                <div class="v-rule">below either threshold</div>
+              </div>
+            </div>
+            <p class="v-desc">Disagreement too sharp to trust. Surfaced to the parent dashboard, not delivered as fact.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div class="right">
+
+        <div>
+          <p class="eyebrow">Why Acharya exists</p>
+          <h2>The hallucination problem, in the country least equipped to catch it.</h2>
+          <div class="twopanel">
+            <div class="panel tinted-bad">
+              <h3>Single-LLM tutors fail silently</h3>
+              <ul>
+                <li>One model, one voice, one chance to be wrong — confidently.</li>
+                <li>A Class 7 child cannot fact-check a chatbot. Neither can their parent.</li>
+                <li>Vernacular questions amplify the hallucination rate.</li>
+              </ul>
+            </div>
+            <div class="panel tinted-good">
+              <h3>What Acharya does differently</h3>
+              <ul>
+                <li>Three independent LLMs run in parallel, not in a chain.</li>
+                <li>A judge model scores fact-by-fact agreement.</li>
+                <li>Brooks–Iyengar fusion discards outliers; verdict is shown in every reply.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pedigree -->
+        <div class="pedigree">
+          <div>
+            <p class="eyebrow" style="color: #8a6334">The pedigree</p>
+            <h2>Why Brooks–Iyengar?</h2>
+            <p>Introduced by <b>Dr. S. S. Iyengar</b> and Richard Brooks in 1996 as a fault-tolerant fusion algorithm for distributed sensor networks — tolerating a minority of faulty sensors while fusing the rest into a defensible reading.</p>
+            <p style="margin: 0;">We treat each LLM as a sensor. The fusion step is structurally identical: tolerate the minority, fuse the majority, surface the disagreement.</p>
+          </div>
+          <div class="pedigree-meta">
+            <div class="yr">1996</div>
+            <div class="yr-lbl">Brooks–Iyengar published</div>
+            <hr/>
+            <div class="yr">3</div>
+            <div class="yr-lbl">LLMs as independent sensors</div>
+            <hr/>
+            <div class="yr">2026</div>
+            <div class="yr-lbl">Applied to vernacular education</div>
+          </div>
+        </div>
+
+        <!-- Intake row -->
+        <div class="intake-row">
+          <div class="intake-card">
+            <div class="ico">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            </div>
+            <div class="body">
+              <h3>Type the question</h3>
+              <p>Kannada · Hindi · English · math via KaTeX</p>
+            </div>
+          </div>
+          <div class="intake-card">
+            <div class="ico">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            </div>
+            <div class="body">
+              <h3>Snap the page</h3>
+              <p>Claude Sonnet vision finds circled / marked questions</p>
+            </div>
+          </div>
+          <div class="intake-card">
+            <div class="ico">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+            </div>
+            <div class="body">
+              <h3>Speak the question</h3>
+              <p>WhatsApp voice-note pattern · roadmap</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats strip -->
+        <div class="stats">
+          <div class="stat-card">
+            <div class="num">~7s</div>
+            <div class="lbl">end-to-end latency, question to verdict</div>
+          </div>
+          <div class="stat-card">
+            <div class="num">3 + 1</div>
+            <div class="lbl">model calls per question — three answerers + one judge</div>
+          </div>
+          <div class="stat-card">
+            <div class="num">15s</div>
+            <div class="lbl">per-model timeout — failed models become non-votes</div>
+          </div>
+          <div class="stat-card">
+            <div class="num">0</div>
+            <div class="lbl">child data retained — no training, no resale</div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+      <div>
+        <b>Acharya · MVP demo</b> — local Next.js simulation of the WhatsApp experience, running real LLM consensus against live APIs.
+      </div>
+      <div class="stack-mini">
+        Built on <b>Anthropic · OpenAI · Google · Meta · NCERT/CBSE · Next.js</b>
+      </div>
+      <div>
+        <a href="https://github.com/writetozealdefense-svg/acharya-mvp">github.com/writetozealdefense-svg/acharya-mvp</a>
+      </div>
+    </footer>
+
+  </div>
+</body>
+</html>

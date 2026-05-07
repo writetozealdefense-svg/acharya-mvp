@@ -40,7 +40,7 @@ If a key is missing, that model degrades to a "fail" card in the consensus panel
 
 > **Running this for Dr. Iyengar or an investor?** See **[DEMOS.md](DEMOS.md)** for full presenter walkthroughs — narration cues, what to point at, and what to do if any scenario doesn't behave as described.
 >
-> **Need a one-pager?** Open <http://localhost:3000/infographic.html> (or [`public/infographic.html`](public/infographic.html) directly). Single self-contained HTML, prints cleanly to A4 PDF for pitch decks, screenshots cleanly for slides.
+> **Need a one-pager?** Open <http://localhost:3000/infographic.html> (or [`public/infographic.html`](public/infographic.html) directly). Single self-contained HTML, prints cleanly to A4 PDF for pitch decks. A pre-rendered JPG version lives at [`public/infographic.jpg`](public/infographic.jpg) (1240×2767, ~520 KB) — drop straight into a slide deck.
 
 ---
 

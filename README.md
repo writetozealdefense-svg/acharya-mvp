@@ -40,6 +40,8 @@ If a key is missing, that model degrades to a "fail" card in the consensus panel
 
 > **Running this for Dr. Iyengar or an investor?** See **[DEMOS.md](DEMOS.md)** for full presenter walkthroughs — narration cues, what to point at, and what to do if any scenario doesn't behave as described.
 >
+> **Need the full Product Requirements Document?** [`public/Acharya-PRD.pdf`](public/Acharya-PRD.pdf) — 24-page PDF with embedded infographics, executive summary, functional requirements (P0/P1/P2), the Brooks–Iyengar algorithm explained, UX flows, privacy posture, success metrics, roadmap, risks, and glossary. Source HTML at [`public/prd.html`](public/prd.html).
+>
 > **Need a one-pager?** Two formats:
 >
 > - **Portrait one-pager** (A4-ish, 1240×2767) — best for handouts and PDF leave-behinds. HTML at <http://localhost:3000/infographic.html> · JPG at [`public/infographic.jpg`](public/infographic.jpg).

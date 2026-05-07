@@ -1,0 +1,1158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Acharya — Product Requirements Document v1.0</title>
+<style>
+  :root {
+    --green:        #075E54;
+    --green-dark:   #054C44;
+    --green-soft:   #E8F1EF;
+    --gold:         #C8965B;
+    --gold-dark:    #8a6334;
+    --gold-soft:    #F5EDE0;
+    --paper:        #FFFFFF;
+    --ink:          #111B21;
+    --ink-soft:     #4A5C66;
+    --line:         #E3DDD2;
+    --good:         #16a34a;
+    --warn:         #d97706;
+    --bad:          #dc2626;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Georgia", "Times New Roman", serif;
+    font-size: 11pt;
+    line-height: 1.55;
+    color: var(--ink);
+    background: var(--paper);
+    -webkit-font-smoothing: antialiased;
+  }
+  .ui {
+    font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+
+  /* ───────────── Page frame ───────────── */
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    padding: 18mm 20mm 16mm;
+    margin: 0 auto;
+    background: #fff;
+    page-break-after: always;
+    position: relative;
+  }
+  .page:last-of-type { page-break-after: auto; }
+
+  /* Running header on each non-cover page */
+  .running-header {
+    position: absolute;
+    top: 8mm;
+    left: 20mm;
+    right: 20mm;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: -apple-system, "Segoe UI", Helvetica, sans-serif;
+    font-size: 9pt;
+    color: var(--ink-soft);
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 4mm;
+  }
+  .running-header .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--green);
+    font-weight: 600;
+  }
+  .running-header .logo .badge {
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--gold); color: #fff;
+    display: inline-grid; place-items: center;
+    font-size: 9px; font-weight: 600;
+    font-family: Georgia, serif;
+  }
+  .running-footer {
+    position: absolute;
+    bottom: 10mm;
+    left: 20mm;
+    right: 20mm;
+    text-align: right;
+    font-family: -apple-system, "Segoe UI", Helvetica, sans-serif;
+    font-size: 8.5pt;
+    color: var(--ink-soft);
+  }
+
+  .body { padding-top: 8mm; }
+
+  /* ───────────── Headings & text ───────────── */
+  h1, h2, h3, h4 {
+    font-family: -apple-system, "Segoe UI", Helvetica, sans-serif;
+    color: var(--green);
+    page-break-after: avoid;
+  }
+  h1 { font-size: 28pt; margin: 0 0 4pt; letter-spacing: -0.5pt; }
+  h2 {
+    font-size: 18pt;
+    margin: 16pt 0 8pt;
+    padding-bottom: 4pt;
+    border-bottom: 2px solid var(--gold);
+  }
+  h3 { font-size: 13pt; margin: 14pt 0 4pt; color: var(--green-dark); }
+  h4 { font-size: 11pt; margin: 10pt 0 2pt; color: var(--ink); font-weight: 700; }
+  p { margin: 0 0 8pt; }
+  ul, ol { margin: 0 0 8pt; padding-left: 18pt; }
+  li { margin-bottom: 3pt; }
+  strong { color: var(--ink); }
+  code {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    background: var(--gold-soft);
+    color: var(--ink);
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-size: 9.5pt;
+  }
+  hr.section-divider {
+    border: none;
+    border-top: 1px solid var(--line);
+    margin: 14pt 0;
+  }
+
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 1.5pt;
+    font-size: 9pt;
+    color: var(--gold);
+    font-weight: 600;
+    font-family: -apple-system, "Segoe UI", Helvetica, sans-serif;
+    margin: 0 0 4pt;
+  }
+
+  /* ───────────── Cover page ───────────── */
+  .cover {
+    background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 30mm 20mm;
+  }
+  .cover .badge {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: var(--gold);
+    display: grid; place-items: center;
+    font-size: 44px; font-weight: 600;
+    font-family: Georgia, serif;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+  }
+  .cover h1 { color: #fff; font-size: 42pt; margin: 16mm 0 4mm; }
+  .cover .subtitle {
+    font-family: -apple-system, "Segoe UI", Helvetica, sans-serif;
+    font-size: 14pt;
+    color: rgba(255,255,255,0.85);
+    max-width: 140mm;
+    line-height: 1.45;
+  }
+  .cover .meta {
+    font-family: -apple-system, "Segoe UI", Helvetica, sans-serif;
+    color: rgba(255,255,255,0.85);
+    font-size: 10pt;
+    border-top: 1px solid rgba(255,255,255,0.25);
+    padding-top: 6mm;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4mm 12mm;
+  }
+  .cover .meta b { color: #fff; }
+
+  /* ───────────── Layout helpers ───────────── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8mm;
+  }
+  .three-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6mm;
+  }
+  .panel {
+    border: 1px solid var(--line);
+    border-radius: 4mm;
+    padding: 5mm 6mm;
+    background: #FCFAF6;
+    page-break-inside: avoid;
+  }
+  .panel.gold { background: var(--gold-soft); border-left: 3px solid var(--gold); }
+  .panel.green { background: var(--green-soft); border-left: 3px solid var(--green); }
+  .panel.bad { background: #FEF7F4; border-left: 3px solid var(--bad); }
+  .panel h3 { margin-top: 0; color: var(--green); font-size: 11pt; }
+  .panel h4 { margin-top: 0; }
+  .panel p { font-size: 10pt; color: var(--ink-soft); margin-bottom: 5pt; }
+  .panel ul { font-size: 10pt; color: var(--ink-soft); }
+
+  table.styled {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: -apple-system, "Segoe UI", Helvetica, sans-serif;
+    font-size: 9.5pt;
+    margin: 6pt 0 12pt;
+  }
+  table.styled th, table.styled td {
+    border: 1px solid var(--line);
+    padding: 5pt 7pt;
+    vertical-align: top;
+    text-align: left;
+  }
+  table.styled th {
+    background: var(--green-soft);
+    color: var(--green);
+    font-weight: 600;
+  }
+  table.styled tr:nth-child(even) td { background: #FAF7F0; }
+
+  .pri-tag {
+    display: inline-block;
+    font-family: -apple-system, "Segoe UI", Helvetica, sans-serif;
+    font-size: 8pt;
+    font-weight: 600;
+    padding: 1pt 6pt;
+    border-radius: 999px;
+    margin-right: 6pt;
+    vertical-align: 2px;
+  }
+  .pri-p0 { background: var(--bad);  color: #fff; }
+  .pri-p1 { background: var(--warn); color: #fff; }
+  .pri-p2 { background: #6b7280;     color: #fff; }
+
+  /* Verdict pills inline */
+  .v-pill {
+    display: inline-block;
+    font-family: -apple-system, "Segoe UI", Helvetica, sans-serif;
+    font-size: 9pt;
+    font-weight: 600;
+    padding: 1pt 7pt;
+    border-radius: 999px;
+  }
+  .v-pill.good { background: #DCFCE7; color: var(--good); border: 1px solid var(--good); }
+  .v-pill.warn { background: #FEF3C7; color: var(--warn); border: 1px solid var(--warn); }
+  .v-pill.bad  { background: #FEE2E2; color: var(--bad);  border: 1px solid var(--bad); }
+
+  blockquote {
+    border-left: 3px solid var(--gold);
+    margin: 8pt 0;
+    padding: 4pt 0 4pt 12pt;
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 10.5pt;
+  }
+
+  /* ───────────── Embedded infographic pages ───────────── */
+  .infographic-frame {
+    margin: 0;
+    padding: 0;
+    background: #ECE7DD;
+    text-align: center;
+  }
+  .infographic-frame .caption {
+    font-family: -apple-system, "Segoe UI", Helvetica, sans-serif;
+    font-size: 9pt;
+    color: var(--ink-soft);
+    margin-top: 4mm;
+    text-align: left;
+  }
+  .infographic-frame img.portrait {
+    display: block;
+    margin: 0 auto;
+    width: 165mm;
+    height: auto;
+    box-shadow: 0 2mm 6mm rgba(0,0,0,0.1);
+  }
+  .infographic-frame img.landscape {
+    display: block;
+    margin: 0 auto;
+    width: 175mm;
+    height: auto;
+    box-shadow: 0 2mm 6mm rgba(0,0,0,0.1);
+    transform: rotate(0deg);
+  }
+  .infographic-frame.landscape-page {
+    /* Landscape orientation handled per-page via @page rule below */
+    background: #ECE7DD;
+  }
+
+  /* TOC */
+  .toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-family: -apple-system, "Segoe UI", Helvetica, sans-serif;
+  }
+  .toc-list li {
+    display: grid;
+    grid-template-columns: 14mm 1fr;
+    align-items: baseline;
+    padding: 4pt 0;
+    border-bottom: 1px dotted var(--line);
+    font-size: 11pt;
+  }
+  .toc-list li .num { color: var(--gold); font-weight: 600; }
+
+  /* Diagrams / SVG */
+  .arch-svg { display: block; width: 100%; height: auto; max-height: 100mm; }
+
+  /* ───────────── Print rules ───────────── */
+  @media print {
+    body { background: #fff; }
+    .page { box-shadow: none; margin: 0; }
+    @page { size: A4 portrait; margin: 0; }
+    @page landscape { size: A4 landscape; margin: 0; }
+    .landscape-page { page: landscape; }
+  }
+
+  /* On-screen, give the pages a soft background so they look like pages */
+  @media screen {
+    body { background: #ECE7DD; padding: 12mm 0; }
+    .page { box-shadow: 0 4mm 12mm rgba(0,0,0,0.1); margin: 8mm auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- COVER PAGE                                                       -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="page cover">
+  <div>
+    <div class="badge">A</div>
+    <h1>Acharya<span style="color: var(--gold);">.</span></h1>
+    <p class="subtitle">
+      A vernacular AI tutor for Indian school children (Class 6&ndash;10), built on
+      <strong>Brooks&ndash;Iyengar fault-tolerant consensus</strong> across three
+      independent LLMs.
+    </p>
+    <p class="subtitle" style="font-size: 11pt; margin-top: 8mm; color: rgba(255,255,255,0.7);">
+      <em>Product Requirements Document &mdash; v1.0</em>
+    </p>
+  </div>
+  <div class="meta">
+    <div><b>Document version</b><br/>v1.0 &mdash; baseline for MVP</div>
+    <div><b>Date</b><br/>2026 &mdash; pre-seed cycle</div>
+    <div><b>Status</b><br/>MVP shipped to local demo · WhatsApp pipeline pending Meta BSP onboarding</div>
+    <div><b>Repository</b><br/>github.com/writetozealdefense-svg/acharya-mvp</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- TABLE OF CONTENTS                                                -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="page">
+  <div class="running-header ui">
+    <span class="logo"><span class="badge">A</span> Acharya &middot; PRD v1.0</span>
+    <span>Table of contents</span>
+  </div>
+  <div class="body">
+    <p class="eyebrow">Contents</p>
+    <h2 style="margin-top: 0;">What's in this document</h2>
+    <ol class="toc-list">
+      <li><span class="num">1</span><span>Executive summary</span></li>
+      <li><span class="num">2</span><span>Product overview &mdash; one-page infographic</span></li>
+      <li><span class="num">3</span><span>The opportunity</span></li>
+      <li><span class="num">4</span><span>Product vision &amp; principles</span></li>
+      <li><span class="num">5</span><span>Target users &amp; personas</span></li>
+      <li><span class="num">6</span><span>Solution overview &mdash; system diagram</span></li>
+      <li><span class="num">7</span><span>Functional requirements (P0 / P1 / P2)</span></li>
+      <li><span class="num">8</span><span>The Brooks&ndash;Iyengar consensus algorithm</span></li>
+      <li><span class="num">9</span><span>Technical architecture</span></li>
+      <li><span class="num">10</span><span>UX flows</span></li>
+      <li><span class="num">11</span><span>Privacy, security, &amp; data handling</span></li>
+      <li><span class="num">12</span><span>Success metrics</span></li>
+      <li><span class="num">13</span><span>Roadmap &amp; milestones</span></li>
+      <li><span class="num">14</span><span>Risks &amp; open questions</span></li>
+      <li><span class="num">15</span><span>Glossary &amp; appendix</span></li>
+    </ol>
+  </div>
+  <div class="running-footer ui">Acharya &middot; PRD v1.0</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 1. EXECUTIVE SUMMARY                                             -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="page">
+  <div class="running-header ui">
+    <span class="logo"><span class="badge">A</span> Acharya &middot; PRD v1.0</span>
+    <span>1. Executive summary</span>
+  </div>
+  <div class="body">
+    <p class="eyebrow">Section 1</p>
+    <h2 style="margin-top: 0;">Executive summary</h2>
+
+    <p>
+      <strong>Acharya is a WhatsApp-native AI tutor for Indian school children (Class 6&ndash;10)
+      that responds in vernacular languages and verifies every answer across three independent
+      LLMs before sending it.</strong> The verification engine is a direct application of the
+      <strong>Brooks&ndash;Iyengar fault-tolerant consensus algorithm</strong> &mdash; treating
+      each LLM as a noisy, occasionally faulty sensor, and fusing their outputs in a way that
+      tolerates a minority of bad signals.
+    </p>
+
+    <p>
+      The product targets the largest under-served education population on Earth: roughly
+      <strong>250 million Indian children in school</strong>, the majority of whom study in
+      a vernacular language and cannot fact-check a chatbot. Single-LLM tutors will hallucinate
+      confidently in those languages, and neither the child nor the parent has a way to know.
+      Acharya makes verification a structural property of the product, not a disclaimer.
+    </p>
+
+    <h3>What is built today</h3>
+    <ul>
+      <li>End-to-end MVP demo on Next.js 14 with a WhatsApp-look chat at <code>localhost:3000</code>.</li>
+      <li>Real Brooks&ndash;Iyengar consensus across <strong>Claude Sonnet 4.5</strong>,
+        <strong>GPT-4o-mini</strong>, and <strong>Gemini 2.0 Flash</strong>, calling all three
+        in parallel and using a fourth Claude call as the fact-agreement judge.</li>
+      <li>Claude Sonnet vision for image-to-question extraction (no client-side OCR).</li>
+      <li>Curriculum-grounded retrieval over 16 textbook excerpts in Kannada, Hindi, and English.</li>
+      <li>Three pre-loaded demo scenarios including a hallucination-catch scenario showing
+        what happens when models disagree.</li>
+      <li>Parent dashboard with subject breakdown, concept tracker, and recent-questions log.</li>
+    </ul>
+
+    <h3>What unlocks scale</h3>
+    <ul>
+      <li>WhatsApp Business API onboarding via a Meta BSP (AiSensy, Gupshup, or similar).</li>
+      <li>Voice-note intake and reply, matching the rural-India usage pattern that already exists.</li>
+      <li>Curriculum coverage expanded from a 16-excerpt seed corpus to full Class 6&ndash;10
+        across CBSE, NCERT, and the major State Boards.</li>
+      <li>Family-account semantics (one parent, multiple children, per-child progress tracking).</li>
+    </ul>
+
+    <h3>The single most important thing to remember about Acharya</h3>
+    <blockquote>
+      Every other AI tutor on the market today ships answers wrapped in
+      &ldquo;AI&hyphen;generated, may be inaccurate.&rdquo; Acharya is the only one that ships
+      with a verdict &mdash;
+      <span class="v-pill good">Verified</span>
+      <span class="v-pill warn">Likely correct</span> or
+      <span class="v-pill bad">Needs human review</span>
+      &mdash; and an audit trail of why.
+    </blockquote>
+  </div>
+  <div class="running-footer ui">Acharya &middot; PRD v1.0</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 2. PORTRAIT INFOGRAPHIC                                          -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="page infographic-frame">
+  <div class="running-header ui" style="background: #ECE7DD; border-bottom: none;">
+    <span class="logo"><span class="badge">A</span> Acharya &middot; PRD v1.0</span>
+    <span>2. Product overview</span>
+  </div>
+  <div style="padding-top: 18mm;">
+    <img class="portrait" src="infographic.jpg" alt="Acharya product overview infographic" />
+  </div>
+  <div class="running-footer ui">Acharya &middot; PRD v1.0</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 3. THE OPPORTUNITY                                               -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="page">
+  <div class="running-header ui">
+    <span class="logo"><span class="badge">A</span> Acharya &middot; PRD v1.0</span>
+    <span>3. The opportunity</span>
+  </div>
+  <div class="body">
+    <p class="eyebrow">Section 3</p>
+    <h2 style="margin-top: 0;">The opportunity</h2>
+
+    <h3>Market sizing</h3>
+    <p>
+      India has approximately <strong>250 million school children in Class 1&ndash;12</strong>
+      &mdash; the world's largest school-going cohort. Of these, roughly
+      <strong>120 million are in Class 6&ndash;10</strong>, the age band where homework help
+      becomes the dominant educational ask outside the classroom. A super-majority study in a
+      vernacular medium of instruction (Hindi, Kannada, Tamil, Telugu, Marathi, Bengali, etc.).
+      The premium English-medium private-tutor market is well-served; the vernacular medium
+      Class 6&ndash;10 market is not.
+    </p>
+
+    <h3>Why now</h3>
+    <ul>
+      <li><strong>WhatsApp penetration.</strong> 500M+ Indian users; effectively the primary
+        compute-and-communication surface for the family unit. No app to install, no UX to teach.</li>
+      <li><strong>Frontier LLMs are now multilingual.</strong> Claude, GPT, and Gemini all
+        produce defensible Class 6&ndash;10 answers in Hindi and Kannada today &mdash;
+        defensible <em>most of the time</em>. The remaining tail of hallucinations is the
+        problem Acharya solves.</li>
+      <li><strong>Per-question economics work.</strong> Three LLM calls + one judge call costs
+        in the order of cents per question at current pricing. Sustainable at parent-pays
+        prices well below an in-person tutor.</li>
+    </ul>
+
+    <h3>The problem with what exists today</h3>
+    <div class="two-col">
+      <div class="panel bad">
+        <h4>Single-LLM tutors</h4>
+        <p>One model, one voice, one chance to be wrong. The child has no way to detect
+          confident-sounding hallucinations &mdash; especially in a vernacular language where
+          model accuracy is meaningfully lower than English.</p>
+      </div>
+      <div class="panel bad">
+        <h4>Edtech apps</h4>
+        <p>Require app installation, English UI, and a paid subscription. Effectively gated to
+          urban English-medium families. Vernacular-medium parents in tier 2&ndash;4 cities are
+          excluded from the design.</p>
+      </div>
+      <div class="panel bad">
+        <h4>WhatsApp tutor groups</h4>
+        <p>Manual, slow, and dependent on the goodwill of a teacher who is already overloaded.
+          No verifiability, no audit trail, no progress tracking.</p>
+      </div>
+      <div class="panel bad">
+        <h4>Generic ChatGPT-style apps</h4>
+        <p>Not designed for children. No curriculum grounding. No parent visibility into what
+          the child is asking or what verdict the AI gave. Disclaimers in legalese, not in
+          actionable form.</p>
+      </div>
+    </div>
+
+    <h3>Acharya's wedge</h3>
+    <p>
+      A WhatsApp-native vernacular tutor whose <em>verification</em> &mdash; not its answers
+      &mdash; is the differentiator. The Brooks&ndash;Iyengar consensus engine is a defensible
+      academic foundation that is also a memorable product story.
+    </p>
+  </div>
+  <div class="running-footer ui">Acharya &middot; PRD v1.0</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 4. PRODUCT VISION & PRINCIPLES                                   -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="page">
+  <div class="running-header ui">
+    <span class="logo"><span class="badge">A</span> Acharya &middot; PRD v1.0</span>
+    <span>4. Product vision &amp; principles</span>
+  </div>
+  <div class="body">
+    <p class="eyebrow">Section 4</p>
+    <h2 style="margin-top: 0;">Product vision &amp; principles</h2>
+
+    <h3>Vision statement</h3>
+    <blockquote>
+      Every Indian school child should have access to a tutor that speaks their language,
+      sees their textbook, and admits when it might be wrong. Acharya is that tutor, on the
+      one app every Indian family already uses.
+    </blockquote>
+
+    <h3>Operating principles</h3>
+
+    <h4>1. Verification is structural, not cosmetic.</h4>
+    <p>Every answer carries a verdict computed from real model agreement, not a static
+      disclaimer. The verdict is visible in the chat bubble &mdash; not buried in settings.</p>
+
+    <h4>2. Vernacular-first, English-second.</h4>
+    <p>The product detects the child's language from the first message and replies in kind.
+      Switching languages is a one-tap pill, not a settings menu.</p>
+
+    <h4>3. The intake is whatever the child is comfortable with.</h4>
+    <p>Type, snap a textbook page, or send a voice note. Acharya does the work of converting
+      these into a question, not the child.</p>
+
+    <h4>4. The parent is a first-class user.</h4>
+    <p>The parent dashboard is a real product surface, not a marketing afterthought. Parents
+      see what their child is asking, which subjects are getting Verified answers, and which
+      topics are being flagged for review.</p>
+
+    <h4>5. Honest failure beats confident hallucination.</h4>
+    <p>If the consensus engine cannot reach a Verified or Likely correct verdict, the child
+      sees a Needs review state and the question goes to the parent dashboard for follow-up.
+      We do not paper over disagreement.</p>
+
+    <h4>6. Built on giants' shoulders.</h4>
+    <p>The product is a thin, opinionated application of well-established work &mdash;
+      Brooks&ndash;Iyengar consensus, frontier LLMs, WhatsApp's distribution. We add taste
+      and judgment, not new model research.</p>
+
+    <h3>Explicit non-goals (v1.0)</h3>
+    <ul>
+      <li>We are not building our own LLM, our own messaging app, or our own curriculum.</li>
+      <li>We are not targeting Class 11&ndash;12 board prep or competitive-exam tutoring in v1.</li>
+      <li>We are not building a parent paywall or per-question billing in v1; pricing is TBD
+        and gated on retention data.</li>
+      <li>We are not localising into the Devanagari numeral system unless user research shows
+        a strong preference; we use Hindu&hyphen;Arabic numerals which the textbooks use.</li>
+      <li>We are not adding a teacher-facing dashboard in v1.</li>
+    </ul>
+  </div>
+  <div class="running-footer ui">Acharya &middot; PRD v1.0</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 5. PERSONAS                                                      -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="page">
+  <div class="running-header ui">
+    <span class="logo"><span class="badge">A</span> Acharya &middot; PRD v1.0</span>
+    <span>5. Target users &amp; personas</span>
+  </div>
+  <div class="body">
+    <p class="eyebrow">Section 5</p>
+    <h2 style="margin-top: 0;">Target users &amp; personas</h2>
+
+    <h3>Primary persona &mdash; Aanya, Class 7, Hubballi</h3>
+    <div class="panel">
+      <p><strong>Profile.</strong> 12 years old, studies in a Karnataka State Board school,
+        medium of instruction is Kannada. English is a second-language subject she finds
+        difficult. She has access to her father's smartphone for an hour after dinner most
+        weekdays.</p>
+      <p><strong>Goal.</strong> Get help with that day's homework before her father loses
+        patience or her mother needs the phone.</p>
+      <p><strong>Trigger.</strong> A specific homework problem she does not understand.</p>
+      <p><strong>Failure mode without Acharya.</strong> She copies an answer from a friend's
+        notebook, or skips the question, or asks her father who is not a subject teacher.
+        Conceptual gaps compound silently.</p>
+      <p><strong>What success looks like.</strong> She types or photographs a question,
+        receives a Kannada explanation in 8&ndash;10 seconds with a Verified badge, follows
+        up with one or two clarifying questions, finishes the problem in under 4 minutes,
+        and goes to bed.</p>
+    </div>
+
+    <h3>Secondary persona &mdash; Vinod, Aanya's father</h3>
+    <div class="panel">
+      <p><strong>Profile.</strong> 42 years old, accountant, active WhatsApp user, completed
+        Class 12 himself but has not done Class 7 science in 25 years. Has two children.</p>
+      <p><strong>Goal.</strong> Know what his daughter is studying and whether she's
+        understanding it &mdash; without having to learn the material himself.</p>
+      <p><strong>What success looks like.</strong> Once a week he opens the parent
+        dashboard, sees a green dot next to "Photosynthesis" and "Linear equations", an
+        amber dot next to "Acids and bases", and a one-line summary like "12 questions this
+        week, 9 Verified, 3 Likely correct, 0 review needed." He tells his daughter she's
+        doing well in math and asks her to slow down on chemistry.</p>
+    </div>
+
+    <h3>Tertiary persona &mdash; the school teacher (out-of-scope for v1)</h3>
+    <div class="panel">
+      <p>Teachers are an obvious adjacent persona &mdash; they could use the same engine to
+        prepare lessons, generate practice problems, and review classroom-wide question
+        patterns. Explicitly out-of-scope for v1 to keep the surface area focused. Phase 3
+        on the roadmap.</p>
+    </div>
+  </div>
+  <div class="running-footer ui">Acharya &middot; PRD v1.0</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 6. SOLUTION OVERVIEW + LANDSCAPE INFOGRAPHIC                     -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="page">
+  <div class="running-header ui">
+    <span class="logo"><span class="badge">A</span> Acharya &middot; PRD v1.0</span>
+    <span>6. Solution overview</span>
+  </div>
+  <div class="body">
+    <p class="eyebrow">Section 6</p>
+    <h2 style="margin-top: 0;">Solution overview</h2>
+
+    <p>
+      The end-to-end loop, from a child's question to a verified answer, is shown below. It
+      runs in roughly 7 seconds today against live model APIs. Every box on the diagram is
+      a real piece of code in the MVP repository.
+    </p>
+
+    <div class="infographic-frame" style="background: var(--paper); padding: 4mm 0;">
+      <img class="landscape" src="infographic-landscape.jpg" alt="Acharya system diagram" style="width: 165mm;" />
+      <p class="caption">
+        <strong>Figure 1.</strong> The Acharya consensus loop. The student question fans out
+        to three independent LLMs in parallel, then a Claude judge call scores fact-by-fact
+        agreement, then Brooks&ndash;Iyengar fusion picks the answer from the highest-confidence
+        eligible model and assigns one of three verdicts based on threshold rules.
+      </p>
+    </div>
+
+    <h3>Why three models, not two or five</h3>
+    <p>
+      Two would be a tie when they disagree. Five would push per-question latency and cost
+      past usable. Three is the smallest number that admits a meaningful majority vote &mdash;
+      and three is exactly what Brooks&ndash;Iyengar fault-tolerant consensus assumes when
+      tolerating a single faulty sensor (the canonical 3<em>f</em>+1 setup with
+      <em>f</em>=1 fault).
+    </p>
+
+    <h3>Why three different vendors</h3>
+    <p>
+      Independence of the votes is everything. Three calls to Claude would correlate. Three
+      calls to OpenAI would correlate. Pulling Anthropic, OpenAI, and Google means three
+      different training corpora, three different fine-tuning regimes, and three different
+      RLHF policies &mdash; the closest you can get to true sensor independence in this
+      domain.
+    </p>
+  </div>
+  <div class="running-footer ui">Acharya &middot; PRD v1.0</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 7. FUNCTIONAL REQUIREMENTS                                       -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="page">
+  <div class="running-header ui">
+    <span class="logo"><span class="badge">A</span> Acharya &middot; PRD v1.0</span>
+    <span>7. Functional requirements</span>
+  </div>
+  <div class="body">
+    <p class="eyebrow">Section 7</p>
+    <h2 style="margin-top: 0;">Functional requirements</h2>
+
+    <p>
+      Requirements are tagged
+      <span class="pri-tag pri-p0">P0</span> (must ship for v1.0),
+      <span class="pri-tag pri-p1">P1</span> (next quarter),
+      <span class="pri-tag pri-p2">P2</span> (later, gated on traction).
+    </p>
+
+    <h3>FR&hyphen;1 &nbsp; Conversational tutoring</h3>
+    <table class="styled">
+      <tr><th style="width:18mm">ID</th><th>Requirement</th><th style="width:20mm">Priority</th></tr>
+      <tr><td>FR-1.1</td><td>The system accepts a free-form question in Kannada, Hindi, or English.</td><td><span class="pri-tag pri-p0">P0</span></td></tr>
+      <tr><td>FR-1.2</td><td>The system detects the language from the question and replies in the same language.</td><td><span class="pri-tag pri-p0">P0</span></td></tr>
+      <tr><td>FR-1.3</td><td>Answers are 3&ndash;5 sentences for concept questions, step-by-step for math/science problems.</td><td><span class="pri-tag pri-p0">P0</span></td></tr>
+      <tr><td>FR-1.4</td><td>Math notation renders correctly via KaTeX in the chat bubble.</td><td><span class="pri-tag pri-p0">P0</span></td></tr>
+      <tr><td>FR-1.5</td><td>The user can type follow-up questions in the same thread; the engine treats each as an independent verification round (no cross-question caching in v1).</td><td><span class="pri-tag pri-p0">P0</span></td></tr>
+      <tr><td>FR-1.6</td><td>Add Tamil, Telugu, Marathi, Bengali, Gujarati to the language toggle.</td><td><span class="pri-tag pri-p1">P1</span></td></tr>
+    </table>
+
+    <h3>FR&hyphen;2 &nbsp; Image intake</h3>
+    <table class="styled">
+      <tr><th>ID</th><th>Requirement</th><th>Priority</th></tr>
+      <tr><td>FR-2.1</td><td>The user can attach a PNG/JPEG photo of a textbook page.</td><td><span class="pri-tag pri-p0">P0</span></td></tr>
+      <tr><td>FR-2.2</td><td>Claude Sonnet vision extracts the most prominent question from the page (preferring circled/marked questions if present).</td><td><span class="pri-tag pri-p0">P0</span></td></tr>
+      <tr><td>FR-2.3</td><td>If no clear question is identified, the user is prompted to type the question while the image is preserved as context.</td><td><span class="pri-tag pri-p0">P0</span></td></tr>
+      <tr><td>FR-2.4</td><td>Voice-note intake (Whisper or equivalent) for questions and replies.</td><td><span class="pri-tag pri-p1">P1</span></td></tr>
+    </table>
+
+    <h3>FR&hyphen;3 &nbsp; Verification engine</h3>
+    <table class="styled">
+      <tr><th>ID</th><th>Requirement</th><th>Priority</th></tr>
+      <tr><td>FR-3.1</td><td>Every answer goes through Brooks&ndash;Iyengar consensus across exactly three LLMs called in parallel: Claude Sonnet, GPT-4o-mini, Gemini 2.0 Flash.</td><td><span class="pri-tag pri-p0">P0</span></td></tr>
+      <tr><td>FR-3.2</td><td>Each model returns structured JSON with <code>answer</code>, <code>key_facts</code> (3&ndash;6 atomic claims), <code>confidence</code> (0&ndash;1), and <code>subject</code>.</td><td><span class="pri-tag pri-p0">P0</span></td></tr>
+      <tr><td>FR-3.3</td><td>A fourth Claude call acts as the fact-agreement judge, scoring each fact 0/1/2 against the other two models' fact lists.</td><td><span class="pri-tag pri-p0">P0</span></td></tr>
+      <tr><td>FR-3.4</td><td>Per-model timeout is 15 seconds; failed models become non-votes and the engine continues with the survivors.</td><td><span class="pri-tag pri-p0">P0</span></td></tr>
+      <tr><td>FR-3.5</td><td>The verdict is one of <span class="v-pill good">Verified</span> / <span class="v-pill warn">Likely correct</span> / <span class="v-pill bad">Needs human review</span> per the threshold rules in Section 8.</td><td><span class="pri-tag pri-p0">P0</span></td></tr>
+      <tr><td>FR-3.6</td><td>The chat header has a "Show consensus reasoning" toggle that expands a panel under each assistant message showing all three model votes side-by-side.</td><td><span class="pri-tag pri-p0">P0</span></td></tr>
+      <tr><td>FR-3.7</td><td>Cross-question caching: identical curriculum questions reuse a recent verdict to reduce cost.</td><td><span class="pri-tag pri-p1">P1</span></td></tr>
+      <tr><td>FR-3.8</td><td>Adaptive sampling: skip the third model when the first two agree at high confidence on a low-stakes question.</td><td><span class="pri-tag pri-p2">P2</span></td></tr>
+    </table>
+  </div>
+  <div class="running-footer ui">Acharya &middot; PRD v1.0</div>
+</section>
+
+<!-- 7 cont. -->
+<section class="page">
+  <div class="running-header ui">
+    <span class="logo"><span class="badge">A</span> Acharya &middot; PRD v1.0</span>
+    <span>7. Functional requirements (cont.)</span>
+  </div>
+  <div class="body">
+    <h3>FR&hyphen;4 &nbsp; Curriculum grounding</h3>
+    <table class="styled">
+      <tr><th style="width:18mm">ID</th><th>Requirement</th><th style="width:20mm">Priority</th></tr>
+      <tr><td>FR-4.1</td><td>A keyword-overlap retrieval pass selects up to 2 relevant excerpts from a curated textbook corpus for every question.</td><td><span class="pri-tag pri-p0">P0</span></td></tr>
+      <tr><td>FR-4.2</td><td>Retrieved excerpts are injected into every model's prompt under a <code>&lt;curriculum_context&gt;</code> tag with grounding instructions.</td><td><span class="pri-tag pri-p0">P0</span></td></tr>
+      <tr><td>FR-4.3</td><td>The seed corpus covers Class 7&ndash;8 across biology, chemistry, physics, math, history, geography (16 excerpts in v1).</td><td><span class="pri-tag pri-p0">P0</span></td></tr>
+      <tr><td>FR-4.4</td><td>Expand corpus to full Class 6&ndash;10 across CBSE, NCERT, Karnataka, Tamil Nadu, Maharashtra, West Bengal boards.</td><td><span class="pri-tag pri-p1">P1</span></td></tr>
+      <tr><td>FR-4.5</td><td>Replace keyword retrieval with embedding-based semantic retrieval once corpus exceeds ~500 excerpts.</td><td><span class="pri-tag pri-p1">P1</span></td></tr>
+    </table>
+
+    <h3>FR&hyphen;5 &nbsp; Parent dashboard</h3>
+    <table class="styled">
+      <tr><th>ID</th><th>Requirement</th><th>Priority</th></tr>
+      <tr><td>FR-5.1</td><td>Summary cards: total questions this week, # Verified, # Needs review, average verdict score.</td><td><span class="pri-tag pri-p0">P0</span></td></tr>
+      <tr><td>FR-5.2</td><td>Subject breakdown as a donut chart with counts.</td><td><span class="pri-tag pri-p0">P0</span></td></tr>
+      <tr><td>FR-5.3</td><td>Concept tracker: green/amber/red dots per topic inferred from verdict patterns.</td><td><span class="pri-tag pri-p0">P0</span></td></tr>
+      <tr><td>FR-5.4</td><td>Recent questions list (last 20) with verdict, subject, language, timestamp.</td><td><span class="pri-tag pri-p0">P0</span></td></tr>
+      <tr><td>FR-5.5</td><td>Per-child accounts within a single parent account; switch child via a dropdown.</td><td><span class="pri-tag pri-p1">P1</span></td></tr>
+      <tr><td>FR-5.6</td><td>Weekly summary push to the parent's WhatsApp (one message, opt-in).</td><td><span class="pri-tag pri-p1">P1</span></td></tr>
+    </table>
+
+    <h3>FR&hyphen;6 &nbsp; WhatsApp delivery (production target)</h3>
+    <table class="styled">
+      <tr><th>ID</th><th>Requirement</th><th>Priority</th></tr>
+      <tr><td>FR-6.1</td><td>Inbound webhook from Meta WhatsApp Business API processes text, image, and (eventually) voice messages.</td><td><span class="pri-tag pri-p0">P0</span></td></tr>
+      <tr><td>FR-6.2</td><td>The same <code>/api/ask</code> and <code>/api/extract-question</code> contracts power both the local demo and the WhatsApp webhook handler.</td><td><span class="pri-tag pri-p0">P0</span></td></tr>
+      <tr><td>FR-6.3</td><td>Outbound replies use WhatsApp's standard message envelope with the verdict prepended as an emoji + label.</td><td><span class="pri-tag pri-p0">P0</span></td></tr>
+      <tr><td>FR-6.4</td><td>BSP integration via AiSensy or Gupshup pending Meta approval.</td><td><span class="pri-tag pri-p0">P0</span></td></tr>
+    </table>
+
+    <h3>FR&hyphen;7 &nbsp; Demo &amp; presentation</h3>
+    <table class="styled">
+      <tr><th>ID</th><th>Requirement</th><th>Priority</th></tr>
+      <tr><td>FR-7.1</td><td>A local demo server convincingly simulates the WhatsApp UI in the browser at <code>localhost:3000</code>.</td><td><span class="pri-tag pri-p0">P0</span></td></tr>
+      <tr><td>FR-7.2</td><td>Three pre-loaded scenarios available from the chat header: Kannada concept question, Hindi algebra image, and the hallucination-catch demo.</td><td><span class="pri-tag pri-p0">P0</span></td></tr>
+      <tr><td>FR-7.3</td><td>The hallucination scenario uses a hardcoded model-vote injection (clearly labelled in source) to stage a disagreement reliably.</td><td><span class="pri-tag pri-p0">P0</span></td></tr>
+    </table>
+  </div>
+  <div class="running-footer ui">Acharya &middot; PRD v1.0</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 8. THE ALGORITHM                                                 -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="page">
+  <div class="running-header ui">
+    <span class="logo"><span class="badge">A</span> Acharya &middot; PRD v1.0</span>
+    <span>8. The Brooks&ndash;Iyengar consensus algorithm</span>
+  </div>
+  <div class="body">
+    <p class="eyebrow">Section 8</p>
+    <h2 style="margin-top: 0;">The Brooks&ndash;Iyengar consensus algorithm</h2>
+
+    <p>
+      The original Brooks&ndash;Iyengar algorithm (Brooks &amp; Iyengar, 1996) was a
+      fault-tolerant data fusion procedure for distributed sensor networks. Given <em>N</em>
+      sensors of which up to <em>f</em> may be Byzantine-faulty, it produces a single fused
+      output whose accuracy is bounded even in the presence of arbitrary failures, by
+      <strong>discarding outliers and weighing the remaining sensor outputs by overlap</strong>.
+    </p>
+
+    <p>
+      Acharya treats each LLM as a sensor. The input &mdash; a tutoring question &mdash; is
+      the same physical phenomenon being observed. Each LLM returns a noisy, occasionally
+      faulty observation: an answer plus a list of factual claims it depends on. The fusion
+      problem becomes: combine three observations into one trustworthy answer in a way that
+      is robust to one model being wrong.
+    </p>
+
+    <h3>The four-step pipeline</h3>
+
+    <h4>Step A &mdash; Subject vote</h4>
+    <p>
+      Each model classifies the question into one of eight subjects (physics, chemistry,
+      biology, math, history, geography, language, other). At least 2 of 3 must agree on the
+      subject; if they don't, the question is flagged for human review immediately and no
+      answer is delivered.
+    </p>
+
+    <h4>Step B &mdash; Fact-agreement scoring</h4>
+    <p>
+      Each model emits 3&ndash;6 atomic factual claims supporting its answer, in English so
+      they can be compared cross-language. A fourth Claude call serves as the judge: for
+      every claim made by every model, the judge inspects whether the other two models'
+      claim lists contain agreeing assertions (semantic match, not string match). This
+      yields a score in <code>{0, 1, 2}</code> per claim &mdash; the number of other models
+      that agreed.
+    </p>
+
+    <h4>Step C &mdash; Fault-tolerant fusion</h4>
+    <p>
+      Per-model statistics are computed: total facts, surviving facts (score &ge;1), average
+      score. <em>Eligible</em> models are those whose subject matches the majority subject,
+      whose surviving fact set is non-empty, and whose average score is &ge;1. Among
+      eligible models, the highest-confidence one is chosen as the answer source. If no
+      model is eligible, the engine falls back to the highest-confidence ok-model and the
+      verdict is forced to Needs review.
+    </p>
+
+    <h4>Step D &mdash; Verdict assignment</h4>
+    <table class="styled">
+      <tr><th>Verdict</th><th>Threshold</th></tr>
+      <tr><td><span class="v-pill good">Verified</span></td><td>3 of 3 models agreed on subject AND &ge;80% of facts have score &ge;1 AND eligible set is non-empty.</td></tr>
+      <tr><td><span class="v-pill warn">Likely correct</span></td><td>2 of 3 models agreed on subject AND &ge;60% of facts have score &ge;1 AND eligible set is non-empty.</td></tr>
+      <tr><td><span class="v-pill bad">Needs human review</span></td><td>Below either of the above thresholds, OR the eligible set is empty.</td></tr>
+    </table>
+
+    <h3>Why this maps cleanly to the original algorithm</h3>
+    <p>
+      Brooks&ndash;Iyengar's contribution was the <em>geometric overlap</em> step &mdash;
+      sensors whose intervals overlap with at least <em>N&minus;f</em> others contribute to
+      the fused output, others are discarded. Our fact-agreement scoring is the LLM
+      analogue: claims are intervals in semantic space, and the judge measures pairwise
+      overlap. The "discard outliers, fuse the rest" operation is the same operation,
+      lifted from real-valued sensor readings to natural-language claims.
+    </p>
+  </div>
+  <div class="running-footer ui">Acharya &middot; PRD v1.0</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 9. ARCHITECTURE                                                  -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="page">
+  <div class="running-header ui">
+    <span class="logo"><span class="badge">A</span> Acharya &middot; PRD v1.0</span>
+    <span>9. Technical architecture</span>
+  </div>
+  <div class="body">
+    <p class="eyebrow">Section 9</p>
+    <h2 style="margin-top: 0;">Technical architecture</h2>
+
+    <h3>MVP stack (today)</h3>
+    <ul>
+      <li><strong>Frontend &amp; API:</strong> Next.js 14 App Router with TypeScript, Tailwind CSS, React 18.</li>
+      <li><strong>Model SDKs:</strong> <code>@anthropic-ai/sdk</code>, <code>openai</code>, <code>@google/generative-ai</code>.</li>
+      <li><strong>Image rendering:</strong> Claude Sonnet vision (no client-side OCR, no Tesseract).</li>
+      <li><strong>Math:</strong> <code>react-markdown</code> + <code>remark-math</code> + <code>rehype-katex</code>.</li>
+      <li><strong>State:</strong> React <code>useState</code> + <code>localStorage</code>. No database in the demo.</li>
+      <li><strong>Icons:</strong> <code>lucide-react</code>.</li>
+    </ul>
+
+    <h3>Production stack (target)</h3>
+    <ul>
+      <li><strong>Messaging:</strong> WhatsApp Business API via a Meta-approved BSP (AiSensy or Gupshup, TBD).</li>
+      <li><strong>Webhook handler:</strong> Same Next.js API routes deployed on Vercel or AWS.</li>
+      <li><strong>Persistence:</strong> Postgres (Neon or Supabase) for accounts, conversations, verdicts. Object storage (S3 or R2) for media.</li>
+      <li><strong>Vector store (FR-4.5):</strong> pgvector or Pinecone, only when curriculum corpus exceeds ~500 documents.</li>
+      <li><strong>Observability:</strong> Per-call latency, cost, verdict distribution, model failure rates. Tooling TBD; native Vercel + a thin custom dashboard initially.</li>
+    </ul>
+
+    <h3>Repository structure</h3>
+    <table class="styled">
+      <tr><th style="width: 60mm">Path</th><th>Role</th></tr>
+      <tr><td><code>app/page.tsx</code></td><td>WhatsApp-style chat UI (client)</td></tr>
+      <tr><td><code>app/dashboard/page.tsx</code></td><td>Parent dashboard (client)</td></tr>
+      <tr><td><code>app/api/ask/route.ts</code></td><td>Question &rarr; verified answer endpoint</td></tr>
+      <tr><td><code>app/api/extract-question/route.ts</code></td><td>Image &rarr; extracted question endpoint</td></tr>
+      <tr><td><code>lib/consensus.ts</code></td><td><strong>Brooks&ndash;Iyengar algorithm</strong> &mdash; the heart of the product</td></tr>
+      <tr><td><code>lib/models.ts</code></td><td>Three SDK adapters with a unified <code>ModelResponse</code> interface</td></tr>
+      <tr><td><code>lib/retrieval.ts</code></td><td>Keyword retrieval over the curriculum corpus</td></tr>
+      <tr><td><code>lib/prompts.ts</code></td><td>System prompts for tutor, consensus, judge, vision</td></tr>
+      <tr><td><code>data/textbook-excerpts.json</code></td><td>Curriculum seed corpus (16 excerpts)</td></tr>
+      <tr><td><code>data/demo-scenarios.json</code></td><td>Three pre-loaded demo scenarios</td></tr>
+    </table>
+
+    <h3>Per-question latency budget</h3>
+    <p>
+      Today the end-to-end loop is roughly 7 seconds against live APIs. The breakdown:
+      ~2.5s for the slowest of three parallel model calls, ~3s for the judge call, ~0.5s for
+      retrieval and orchestration, ~1s for network. Headroom is the judge call &mdash; future
+      work batches all judge queries into a single call to cut ~2s.
+    </p>
+  </div>
+  <div class="running-footer ui">Acharya &middot; PRD v1.0</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 10. UX FLOWS                                                     -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="page">
+  <div class="running-header ui">
+    <span class="logo"><span class="badge">A</span> Acharya &middot; PRD v1.0</span>
+    <span>10. UX flows</span>
+  </div>
+  <div class="body">
+    <p class="eyebrow">Section 10</p>
+    <h2 style="margin-top: 0;">UX flows</h2>
+
+    <h3>Flow 1 &mdash; Type-and-ask (the 80% case)</h3>
+    <ol>
+      <li>Child opens WhatsApp, taps Acharya, types a question in their language.</li>
+      <li>Typing dots appear in the assistant bubble (~7s).</li>
+      <li>Answer arrives with a green <span class="v-pill good">Verified</span> badge in the bubble corner.</li>
+      <li>If the child wants the reasoning, they tap "Show consensus reasoning" in the chat header to expand a side panel showing all three model votes (in the local demo). On WhatsApp itself, this becomes a one-line link "Why this answer?" that opens a webview.</li>
+    </ol>
+
+    <h3>Flow 2 &mdash; Snap-the-page</h3>
+    <ol>
+      <li>Child taps the paperclip, picks a photo of the textbook page.</li>
+      <li>Image preview appears with "Reading question..." caption.</li>
+      <li>Within 2&ndash;3s, the extracted question text is auto-populated in the input field with the image preserved as an attachment.</li>
+      <li>Child taps Send (or edits the extracted text first if needed).</li>
+      <li>Same answer flow as Flow 1, with the image surfaced in the user message bubble.</li>
+    </ol>
+
+    <h3>Flow 3 &mdash; Disagreement</h3>
+    <ol>
+      <li>Question is sent normally.</li>
+      <li>Consensus engine runs; verdict comes back as <span class="v-pill warn">Likely correct</span> or <span class="v-pill bad">Needs human review</span>.</li>
+      <li>Answer is delivered with the appropriate badge. For Likely correct, a soft caveat is appended ("Two of three models agreed on this; check the panel for the third opinion.").</li>
+      <li>For Needs review, no answer text is delivered; a message says "Acharya isn't confident enough to teach this answer. Your parent will see this in the dashboard." and the question goes to the parent dashboard's review queue.</li>
+    </ol>
+
+    <h3>Flow 4 &mdash; Parent dashboard</h3>
+    <ol>
+      <li>Parent opens the dashboard from the chat header menu (or a weekly WhatsApp link, in production).</li>
+      <li>Top of page: 4 summary cards, then the subject donut chart with legend.</li>
+      <li>Below: concept tracker with green/amber/red dots per topic.</li>
+      <li>Below: last 20 questions chronologically with their verdict icons, subject, language, and timestamp.</li>
+      <li>Tapping a Needs-review item opens the full question and the consensus panel for that exchange (P1).</li>
+    </ol>
+  </div>
+  <div class="running-footer ui">Acharya &middot; PRD v1.0</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 11. PRIVACY & SECURITY                                           -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="page">
+  <div class="running-header ui">
+    <span class="logo"><span class="badge">A</span> Acharya &middot; PRD v1.0</span>
+    <span>11. Privacy, security, &amp; data handling</span>
+  </div>
+  <div class="body">
+    <p class="eyebrow">Section 11</p>
+    <h2 style="margin-top: 0;">Privacy, security, &amp; data handling</h2>
+
+    <h3>Children's data: the operating posture</h3>
+    <p>
+      Acharya's primary users are minors. The product's data posture must clear that bar
+      before anything else.
+    </p>
+
+    <h3>Commitments (v1.0)</h3>
+    <ul>
+      <li><strong>No training on child data.</strong> Conversations are not used to fine-tune
+        any model, nor sent to model providers under contracts that allow training. We use the
+        Anthropic, OpenAI, and Google API endpoints whose default policy is no-training, and
+        we do not opt into training programs.</li>
+      <li><strong>No resale.</strong> Conversation data is never sold, shared with advertisers,
+        or used to build profiles for third parties.</li>
+      <li><strong>Minimum retention.</strong> The default retention is 90 days for the parent
+        dashboard's recent-questions feature, then automatic purge. Verdicts and subject
+        labels (without question text) may be retained longer for product analytics.</li>
+      <li><strong>Parent visibility.</strong> The parent always has access to the same data
+        the system has &mdash; the dashboard is the primary interface for that visibility.</li>
+      <li><strong>Indian data residency (target).</strong> Production storage in an
+        India-resident region of the chosen cloud provider, before public launch.</li>
+    </ul>
+
+    <h3>What we still need to do</h3>
+    <ul>
+      <li>Privacy policy review by an Indian counsel before public launch.</li>
+      <li>WhatsApp Business profile compliance with Meta's child-product rules.</li>
+      <li>Decide opt-in vs opt-out semantics for the parent's weekly summary push.</li>
+      <li>Decide whether voice notes are stored at all once transcribed.</li>
+    </ul>
+
+    <h3>Security baseline (v1.0)</h3>
+    <ul>
+      <li>HTTPS only. Webhook signature verification for Meta callbacks.</li>
+      <li>API keys in environment variables, never in source control. The MVP repo's
+        <code>.gitignore</code> blocks <code>.env.local</code> at the root.</li>
+      <li>Rate-limiting per phone number on the WhatsApp webhook to prevent abuse.</li>
+      <li>Standard Postgres-side encryption at rest from the chosen managed provider.</li>
+    </ul>
+  </div>
+  <div class="running-footer ui">Acharya &middot; PRD v1.0</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 12 + 13. METRICS + ROADMAP                                       -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="page">
+  <div class="running-header ui">
+    <span class="logo"><span class="badge">A</span> Acharya &middot; PRD v1.0</span>
+    <span>12&ndash;13. Metrics &amp; roadmap</span>
+  </div>
+  <div class="body">
+    <p class="eyebrow">Section 12</p>
+    <h2 style="margin-top: 0;">Success metrics</h2>
+
+    <h3>Engagement (per child)</h3>
+    <ul>
+      <li>Daily active rate among onboarded children (target: &ge;40% by month 3 post-launch).</li>
+      <li>Median questions per active day (target: 3&ndash;5).</li>
+      <li>Median session length (target: 4&ndash;7 minutes &mdash; long enough to be useful, short enough to not be dependency).</li>
+    </ul>
+
+    <h3>Quality (per question)</h3>
+    <ul>
+      <li>Distribution of verdicts: target &ge;75% Verified, &le;5% Needs review.</li>
+      <li>End-to-end latency p50 / p95 (target: &le;7s / &le;12s).</li>
+      <li>Per-model failure rate (target: &le;2% per provider).</li>
+    </ul>
+
+    <h3>Trust (per parent)</h3>
+    <ul>
+      <li>Weekly dashboard open rate among parents (target: &ge;30%).</li>
+      <li>Review-queue resolution rate (target: &ge;60% of Needs-review items reviewed within 7 days).</li>
+    </ul>
+
+    <h3>Cost</h3>
+    <ul>
+      <li>Average per-question cost (target: &le; &#8377;1.5 at scale, including the judge call).</li>
+    </ul>
+
+    <p class="eyebrow" style="margin-top: 12pt;">Section 13</p>
+    <h2 style="margin-top: 0;">Roadmap &amp; milestones</h2>
+
+    <table class="styled">
+      <tr><th style="width: 28mm">Milestone</th><th style="width: 28mm">Target</th><th>Scope</th></tr>
+      <tr><td>M1 &mdash; MVP</td><td>Done</td><td>Local demo, 3-LLM consensus, vision intake, parent dashboard, three demo scenarios.</td></tr>
+      <tr><td>M2 &mdash; BSP onboarding</td><td>Q3 2026</td><td>Meta WhatsApp Business API approval via BSP. Single test number live.</td></tr>
+      <tr><td>M3 &mdash; Closed beta</td><td>Q4 2026</td><td>50 families across 2 cities. Voice intake. Persistence layer in production. Privacy policy filed.</td></tr>
+      <tr><td>M4 &mdash; Public launch</td><td>Q1 2027</td><td>Open WhatsApp signup. Weekly parent summary push. Tamil + Telugu added.</td></tr>
+      <tr><td>M5 &mdash; Teacher surface</td><td>Q3 2027</td><td>Teacher dashboard for classroom-wide question patterns and lesson preparation.</td></tr>
+    </table>
+  </div>
+  <div class="running-footer ui">Acharya &middot; PRD v1.0</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 14 + 15. RISKS + APPENDIX                                        -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="page">
+  <div class="running-header ui">
+    <span class="logo"><span class="badge">A</span> Acharya &middot; PRD v1.0</span>
+    <span>14&ndash;15. Risks &amp; appendix</span>
+  </div>
+  <div class="body">
+    <p class="eyebrow">Section 14</p>
+    <h2 style="margin-top: 0;">Risks &amp; open questions</h2>
+
+    <h3>Risks</h3>
+    <table class="styled">
+      <tr><th style="width: 50mm">Risk</th><th>Mitigation</th></tr>
+      <tr><td>Meta BSP onboarding takes &gt;3 months and stalls launch.</td><td>The local demo de-risks investor and advisor conversations independently of the launch path. M2 timeline assumes worst-case.</td></tr>
+      <tr><td>Per-question cost stays above target at scale.</td><td>FR-3.7 caching and FR-3.8 adaptive sampling are the levers; both are P1/P2 because they only matter once volume is real.</td></tr>
+      <tr><td>Models converge on a wrong consensus (correlated failure mode).</td><td>The three vendors give us partial protection; for board-prep accuracy a future "expert review" mode could route flagged questions to subject-matter humans.</td></tr>
+      <tr><td>Parent doesn't engage with the dashboard.</td><td>The weekly WhatsApp push (FR-5.6) brings the dashboard to where the parent already is. Validate in M3 closed beta.</td></tr>
+      <tr><td>Vernacular models lag English meaningfully on niche topics.</td><td>Curriculum grounding (FR-4) is the primary mitigation. Verdict downgrades to Needs review when grounding fails.</td></tr>
+    </table>
+
+    <h3>Open questions</h3>
+    <ul>
+      <li>Pricing model: parent-pays-monthly vs free-with-school-partnership vs freemium.</li>
+      <li>Whether the consensus panel webview is needed on WhatsApp or whether a one-line caveat is enough for parents.</li>
+      <li>How to detect and handle non-academic questions (a child asking a personal question, e.g. health or family) without rejecting them rudely.</li>
+      <li>Whether voice replies (TTS) are worth the complexity in v1, or only voice-in.</li>
+    </ul>
+
+    <hr class="section-divider" />
+
+    <p class="eyebrow">Section 15</p>
+    <h2 style="margin-top: 0;">Glossary &amp; appendix</h2>
+
+    <h3>Glossary</h3>
+    <table class="styled">
+      <tr><th style="width: 50mm">Term</th><th>Meaning in Acharya</th></tr>
+      <tr><td>Brooks&ndash;Iyengar consensus</td><td>The fault-tolerant fusion algorithm at the heart of the product. See Section 8.</td></tr>
+      <tr><td>Verdict</td><td>One of <span class="v-pill good">Verified</span>, <span class="v-pill warn">Likely correct</span>, <span class="v-pill bad">Needs human review</span> &mdash; computed per the threshold rules in Section 8.</td></tr>
+      <tr><td>Eligible model</td><td>A model whose subject matches the majority subject, whose surviving fact set is non-empty, and whose average fact-agreement score is &ge;1.</td></tr>
+      <tr><td>Surviving fact</td><td>A claim from a model whose fact-agreement score is &ge;1 (at least one other model agreed).</td></tr>
+      <tr><td>Outlier fact</td><td>A claim with score 0 &mdash; no other model agreed. Discarded during fusion.</td></tr>
+      <tr><td>BSP</td><td>Business Solution Provider &mdash; a Meta-approved partner through which the WhatsApp Business API is accessed.</td></tr>
+    </table>
+
+    <h3>References</h3>
+    <ul>
+      <li>Brooks, R. R., &amp; Iyengar, S. S. (1996). <em>Robust Distributed Computing and Sensing Algorithm.</em> IEEE Computer.</li>
+      <li>Anthropic Claude API documentation &mdash; vision &amp; structured output.</li>
+      <li>OpenAI Chat Completions API &mdash; JSON mode.</li>
+      <li>Google Gemini API &mdash; <code>responseMimeType: application/json</code>.</li>
+      <li>Meta WhatsApp Business API &mdash; webhook contract, message templates, BSP partner list.</li>
+    </ul>
+
+    <p style="margin-top: 18pt; font-size: 9pt; color: var(--ink-soft); text-align: center;">
+      &mdash; End of document &mdash;<br/>
+      Acharya &middot; Product Requirements v1.0 &middot;
+      <a href="https://github.com/writetozealdefense-svg/acharya-mvp" style="color: var(--gold); text-decoration: none;">github.com/writetozealdefense-svg/acharya-mvp</a>
+    </p>
+  </div>
+  <div class="running-footer ui">Acharya &middot; PRD v1.0</div>
+</section>
+
+</body>
+</html>
